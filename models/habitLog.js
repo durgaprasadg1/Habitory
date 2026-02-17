@@ -1,14 +1,29 @@
-const habitLogSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+import mongoose from "mongoose";
 
-  habitId: { type: mongoose.Schema.Types.ObjectId, ref: "Habit", required: true },
+// Clear cache to prevent type casting issues
+if (mongoose.models.HabitLog) {
+  delete mongoose.models.HabitLog;
+}
 
-  date: { type: Date, required: true },
+const habitLogSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: String,
+      required: true,
+    },
 
-  completed: { type: Boolean, default: false },
-
-}, { timestamps: true });
+    habitId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Habit",
+      required: true,
+    },
+    date: { type: Date, required: true },
+    completed: { type: Boolean, default: false },
+  },
+  { timestamps: true },
+);
 
 habitLogSchema.index({ habitId: 1, date: 1 }, { unique: true });
 
-export default mongoose.models.HabitLog || mongoose.model("HabitLog", habitLogSchema);
+export default mongoose.models.HabitLog ||
+  mongoose.model("HabitLog", habitLogSchema);

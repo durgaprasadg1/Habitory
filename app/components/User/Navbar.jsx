@@ -5,11 +5,9 @@ import { usePathname } from "next/navigation";
 import { Home, Calendar, BarChart3, History, Settings } from "lucide-react";
 
 const navItems = [
-  { href: "/user/dashboard", icon: Home },
-  { href: "/user/month/2026/2", icon: Calendar },
-  { href: "/user/analytics", icon: BarChart3 },
-  { href: "/user/history", icon: History },
-  { href: "/user/settings", icon: Settings },
+  { href: "/dashboard", icon: Home },
+  { href: "/analytics", icon: BarChart3 },
+  { href: "/history", icon: History },
 ];
 
 export default function Navbar() {
@@ -17,14 +15,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/5 border-b border-white/10">
-        <div className="flex items-center justify-between px-4 py-4">
-          <h1 className="text-sm tracking-widest text-white/70">
-            HABIT TRACKER
-          </h1>
-          <div className="h-8 w-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600" />
-        </div>
-      </header>
+      
 
       <nav className="fixed bottom-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/5 border-t border-white/10">
         <div className="flex items-center justify-between px-6 py-3">

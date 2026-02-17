@@ -1,15 +1,31 @@
-const habitSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+import mongoose from "mongoose";
 
-  monthId: { type: mongoose.Schema.Types.ObjectId, ref: "Month", required: true },
+// Clear cache to prevent type casting issues
+if (mongoose.models.Habit) {
+  delete mongoose.models.Habit;
+}
 
-  name: { type: String, required: true },
-  category: { type: String },
+const habitSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: String,
+      required: true,
+    },
 
-  isGoalHabit: { type: Boolean, default: false },
+    monthId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Month",
+      required: true,
+    },
 
-  isEditable: { type: Boolean, default: true }, // becomes false after day 3
+    name: { type: String, required: true },
+    category: { type: String },
 
-}, { timestamps: true });
+    isGoalHabit: { type: Boolean, default: false },
+
+    isEditable: { type: Boolean, default: true }, // becomes false after day 3
+  },
+  { timestamps: true },
+);
 
 export default mongoose.models.Habit || mongoose.model("Habit", habitSchema);

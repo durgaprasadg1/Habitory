@@ -12,7 +12,7 @@ export default function Page() {
         path="/sign-up"
         routing="path"
         signInUrl="/sign-in"
-        afterSignUpUrl="/user/dashboard"
+        afterSignUpUrl="/dashboard"
         appearance={{
           elements: {
             rootBox: "w-full flex justify-center",
