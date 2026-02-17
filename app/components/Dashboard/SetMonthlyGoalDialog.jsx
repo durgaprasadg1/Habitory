@@ -13,11 +13,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Target } from "lucide-react";
 
-export const SetMonthlyGoalDialog = ({
-  currentGoal,
-  habits,
-  onSetGoal,
-}) => {
+export const SetMonthlyGoalDialog = ({ currentGoal, habits, onSetGoal }) => {
   const [open, setOpen] = useState(false);
   const [goalTitle, setGoalTitle] = useState("");
   const [goalDescription, setGoalDescription] = useState("");
@@ -33,14 +29,12 @@ export const SetMonthlyGoalDialog = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (goalTitle.trim()) {
       onSetGoal({
         goalTitle,
         goalDescription,
         goalHabitId: goalHabitId || undefined,
       });
-
       setOpen(false);
     }
   };
@@ -50,63 +44,61 @@ export const SetMonthlyGoalDialog = ({
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          className="bg-gray-800 hover:bg-gray-700 border-gray-700"
+          className="border-[#A8A29E]/50 text-[#1C1917] hover:bg-[#E7E5E4]"
         >
-          <Target className="w-4 h-4 mr-2" />
+          <Target className="w-4 h-4 mr-2 text-[#C08457]" />
           Set Monthly Goal
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-md text-black">
+      <DialogContent className="sm:max-w-md bg-[#E7E5E4] border border-[#A8A29E]/40 text-[#1C1917]">
         <DialogHeader>
-          <DialogTitle>Set Monthly Goal</DialogTitle>
-          <DialogDescription>
-            Define your goal for this month. You can link it to one of your
-            habits.
+          <DialogTitle className="text-[#1C1917]">
+            Set Monthly Goal
+          </DialogTitle>
+          <DialogDescription className="text-[#A8A29E]">
+            Define your goal for this month. You can link it to one of your habits.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <label htmlFor="goalTitle" className="text-sm font-medium">
+              <label htmlFor="goalTitle" className="text-sm font-medium text-[#1C1917]">
                 Goal Title *
               </label>
               <input
                 id="goalTitle"
                 value={goalTitle}
                 onChange={(e) => setGoalTitle(e.target.value)}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                className="h-10 w-full rounded-md border border-[#A8A29E]/50 bg-white px-3 py-2 text-sm text-[#1C1917] focus:ring-1 focus:ring-[#C08457] focus:border-[#C08457]"
                 placeholder="e.g., Read 20 Days"
                 required
               />
             </div>
 
             <div className="grid gap-2">
-              <label
-                htmlFor="goalDescription"
-                className="text-sm font-medium"
-              >
+              <label htmlFor="goalDescription" className="text-sm font-medium text-[#1C1917]">
                 Description
               </label>
               <textarea
                 id="goalDescription"
                 value={goalDescription}
                 onChange={(e) => setGoalDescription(e.target.value)}
-                className="flex min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                className="min-h-20 w-full rounded-md border border-[#A8A29E]/50 bg-white px-3 py-2 text-sm text-[#1C1917] focus:ring-1 focus:ring-[#C08457] focus:border-[#C08457]"
                 placeholder="e.g., Read at least 30 minutes daily"
               />
             </div>
 
             <div className="grid gap-2">
-              <label htmlFor="goalHabit" className="text-sm font-medium">
+              <label htmlFor="goalHabit" className="text-sm font-medium text-[#1C1917]">
                 Link to Habit (Optional)
               </label>
               <select
                 id="goalHabit"
                 value={goalHabitId}
                 onChange={(e) => setGoalHabitId(e.target.value)}
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                className="h-10 w-full rounded-md border border-[#A8A29E]/50 bg-white px-3 py-2 text-sm text-[#1C1917] focus:ring-1 focus:ring-[#C08457] focus:border-[#C08457]"
               >
                 <option value="">None</option>
                 {habits.map((habit) => (
@@ -123,13 +115,14 @@ export const SetMonthlyGoalDialog = ({
               type="button"
               variant="outline"
               onClick={() => setOpen(false)}
+              className="border-[#A8A29E]/50 text-[#1C1917]"
             >
               Cancel
             </Button>
 
             <Button
               type="submit"
-              className="bg-purple-600 hover:bg-purple-700"
+              className="bg-[#C08457] hover:opacity-90 text-white"
             >
               Save Goal
             </Button>

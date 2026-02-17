@@ -42,52 +42,42 @@ export const EditHabitDialog = ({ habit, onUpdate, onDelete }) => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
-
     try {
       const res = await fetch(`/api/habits/${habit._id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, category, isGoalHabit }),
       });
-
       if (!res.ok) {
         toast.error("Failed to update habit");
         return;
       }
-
       toast.success("Habit updated successfully!");
       setOpen(false);
       onUpdate();
-    } catch (error) {
-      console.error("Update failed:", error);
+    } catch {
       toast.error("Failed to update habit");
     }
   };
 
   const handleDelete = async () => {
     const confirmDelete = window.confirm(
-      "Are you sure? This will delete all tracking data for this habit.",
+      "Are you sure? This will delete all tracking data for this habit."
     );
-
     if (!confirmDelete) return;
-
     setIsDeleting(true);
-
     try {
       const res = await fetch(`/api/habits/${habit._id}`, {
         method: "DELETE",
       });
-
       if (!res.ok) {
         toast.error("Failed to delete habit");
         return;
       }
-
       toast.success("Habit deleted successfully!");
       setOpen(false);
       onDelete();
-    } catch (error) {
-      console.error("Delete failed:", error);
+    } catch {
       toast.error("Failed to delete habit");
     } finally {
       setIsDeleting(false);
@@ -98,17 +88,19 @@ export const EditHabitDialog = ({ habit, onUpdate, onDelete }) => {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="text-gray-400 hover:text-white transition-colors"
+        className="text-[#A8A29E] hover:text-[#1C1917] transition-colors"
         title="Edit habit"
       >
         <Pencil className="w-4 h-4" />
       </button>
 
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="sm:max-w-md text-black">
+        <DialogContent className="sm:max-w-md bg-[#E7E5E4] border border-[#A8A29E]/40 text-[#1C1917]">
           <DialogHeader>
-            <DialogTitle>Edit Habit</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-[#1C1917]">
+              Edit Habit
+            </DialogTitle>
+            <DialogDescription className="text-[#A8A29E]">
               Update your habit details or delete it permanently.
             </DialogDescription>
           </DialogHeader>
@@ -116,27 +108,27 @@ export const EditHabitDialog = ({ habit, onUpdate, onDelete }) => {
           <form onSubmit={handleUpdate}>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <label htmlFor="edit-name" className="text-sm font-medium">
+                <label htmlFor="edit-name" className="text-sm font-medium text-[#1C1917]">
                   Habit Name *
                 </label>
                 <input
                   id="edit-name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                  className="h-10 w-full rounded-md border border-[#A8A29E]/50 bg-white px-3 py-2 text-sm text-[#1C1917] focus:ring-1 focus:ring-[#C08457] focus:border-[#C08457]"
                   required
                 />
               </div>
 
               <div className="grid gap-2">
-                <label htmlFor="edit-category" className="text-sm font-medium">
+                <label htmlFor="edit-category" className="text-sm font-medium text-[#1C1917]">
                   Category
                 </label>
                 <Select value={category} onValueChange={setCategory}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full bg-white border border-[#A8A29E]/50 text-[#1C1917] focus:ring-1 focus:ring-[#C08457]">
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-[#E7E5E4] border border-[#A8A29E]/40 text-[#1C1917]">
                     {CATEGORIES.map((cat) => (
                       <SelectItem key={cat} value={cat}>
                         {cat}
@@ -152,11 +144,11 @@ export const EditHabitDialog = ({ habit, onUpdate, onDelete }) => {
                   id="edit-isGoalHabit"
                   checked={isGoalHabit}
                   onChange={(e) => setIsGoalHabit(e.target.checked)}
-                  className="h-4 w-4 rounded border-gray-300"
+                  className="h-4 w-4 rounded border-[#A8A29E]"
                 />
                 <label
                   htmlFor="edit-isGoalHabit"
-                  className="text-sm font-medium"
+                  className="text-sm font-medium text-[#1C1917]"
                 >
                   Set as monthly goal habit
                 </label>
@@ -166,10 +158,9 @@ export const EditHabitDialog = ({ habit, onUpdate, onDelete }) => {
             <DialogFooter className="gap-2">
               <Button
                 type="button"
-                variant="outline"
-                className="bg-red-600 hover:bg-red-700 text-white border-red-600"
                 onClick={handleDelete}
                 disabled={isDeleting}
+                className="bg-[#DC2626] hover:opacity-90 text-white"
               >
                 <Trash2 className="w-4 h-4 mr-2" />
                 {isDeleting ? "Deleting..." : "Delete"}
@@ -181,13 +172,14 @@ export const EditHabitDialog = ({ habit, onUpdate, onDelete }) => {
                 type="button"
                 variant="outline"
                 onClick={() => setOpen(false)}
+                className="border-[#A8A29E]/50 text-[#1C1917]"
               >
                 Cancel
               </Button>
 
               <Button
                 type="submit"
-                className="bg-purple-600 hover:bg-purple-700"
+                className="bg-[#C08457] hover:opacity-90 text-white"
               >
                 Update
               </Button>

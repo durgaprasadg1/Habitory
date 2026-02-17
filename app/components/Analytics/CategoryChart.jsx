@@ -9,12 +9,12 @@ import {
 } from "recharts";
 
 const COLORS = [
-  "#8B5CF6",
-  "#EC4899",
-  "#F59E0B",
-  "#10B981",
-  "#3B82F6",
-  "#EF4444",
+  "#C08457",
+  "#A8A29E",
+  "#1C1917",
+  "#DC2626",
+  "#C08457",
+  "#A8A29E",
 ];
 
 export default function CategoryChart({ categoryStats }) {
@@ -25,9 +25,9 @@ export default function CategoryChart({ categoryStats }) {
   }));
 
   return (
-    <Card className="bg-gray-900 border-gray-800">
+    <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40">
       <CardHeader>
-        <CardTitle className="text-base sm:text-lg text-white">
+        <CardTitle className="text-base sm:text-lg text-[#1C1917]">
           Category Distribution
         </CardTitle>
       </CardHeader>
@@ -42,7 +42,6 @@ export default function CategoryChart({ categoryStats }) {
                 labelLine={false}
                 label={({ name, percentage }) => `${name}: ${percentage}%`}
                 outerRadius={80}
-                fill="#8884d8"
                 dataKey="value"
               >
                 {data.map((entry, index) => (
@@ -54,13 +53,17 @@ export default function CategoryChart({ categoryStats }) {
               </Pie>
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "#1F2937",
-                  border: "1px solid #374151",
+                  backgroundColor: "#E7E5E4",
+                  border: "1px solid #A8A29E",
                   borderRadius: "8px",
                   fontSize: "12px",
                 }}
+                labelStyle={{ color: "#1C1917" }}
               />
-              <Legend wrapperStyle={{ fontSize: "11px" }} iconType="circle" />
+              <Legend
+                wrapperStyle={{ fontSize: "11px", color: "#1C1917" }}
+                iconType="circle"
+              />
             </PieChart>
           </ResponsiveContainer>
         </div>

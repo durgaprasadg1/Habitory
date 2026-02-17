@@ -8,7 +8,7 @@ import CategoryChart from "@/app/components/Analytics/CategoryChart";
 import DailyTrendChart from "@/app/components/Analytics/DailyTrendChart";
 import WeeklyTrendChart from "@/app/components/Analytics/WeeklyTrendChart";
 import Loader from "@/app/components/Home/Loader";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { Calendar, TrendingUp } from "lucide-react";
 
 export default function AnalyticsPage() {
@@ -63,23 +63,13 @@ export default function AnalyticsPage() {
   };
 
   const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "January","February","March","April","May","June",
+    "July","August","September","October","November","December",
   ];
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen ">
+      <div className="flex items-center justify-center min-h-screen bg-[#F8F5F2]">
         <Loader size={48} />
       </div>
     );
@@ -87,45 +77,49 @@ export default function AnalyticsPage() {
 
   if (!analytics) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-gray-950">
-        <Card className="bg-gray-900 border-gray-800 p-6">
-          <p className="text-gray-400">No analytics data available</p>
+      <div className="flex items-center justify-center min-h-screen bg-[#F8F5F2]">
+        <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40 p-6">
+          <p className="text-[#A8A29E]">
+            No analytics data available
+          </p>
         </Card>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen text-white p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 lg:p-8">
       <div className="max-w-7xl mx-auto mb-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-2">
-              <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-purple-500" />
+              <TrendingUp className="w-6 h-6 sm:w-8 sm:h-8 text-[#C08457]" />
               Analytics
             </h1>
-            <p className="text-gray-400 text-sm sm:text-base mt-1">
+            <p className="text-[#A8A29E] text-sm sm:text-base mt-1">
               Insights into your habit performance
             </p>
           </div>
 
           {/* Month Selector */}
-          <div className="flex items-center gap-2 bg-gray-900 rounded-lg p-2 border border-gray-800">
+          <div className="flex items-center gap-2 bg-[#E7E5E4] rounded-lg p-2 border border-[#A8A29E]/40">
             <button
               onClick={() => handleMonthChange(-1)}
-              className="px-3 py-1 hover:bg-gray-800 rounded transition-colors"
+              className="px-3 py-1 hover:bg-[#A8A29E]/20 rounded transition-colors"
             >
               ←
             </button>
+
             <div className="flex items-center gap-2 px-3">
-              <Calendar className="w-4 h-4 text-purple-500" />
+              <Calendar className="w-4 h-4 text-[#C08457]" />
               <span className="font-medium text-sm sm:text-base">
                 {monthNames[selectedDate.month - 1]} {selectedDate.year}
               </span>
             </div>
+
             <button
               onClick={() => handleMonthChange(1)}
-              className="px-3 py-1 hover:bg-gray-800 rounded transition-colors"
+              className="px-3 py-1 hover:bg-[#A8A29E]/20 rounded transition-colors"
             >
               →
             </button>
@@ -147,8 +141,6 @@ export default function AnalyticsPage() {
         </div>
 
         <WeeklyTrendChart weeklyStats={analytics.weeklyStats} />
-
-        
       </div>
     </div>
   );

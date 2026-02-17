@@ -19,7 +19,6 @@ export default function Dashboard() {
   const year = date.getFullYear();
   const month = date.getMonth();
 
-  // Check if the selected month is in the past
   const isPastMonth = () => {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -164,69 +163,73 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen text-white p-4 sm:p-6 space-y-4 sm:space-y-6 pb-20">
-      <DashboardHeader
-        month={date.toLocaleString("default", { month: "long" })}
-        year={year}
-        onPrev={handlePrevMonth}
-        onNext={() => setDate(new Date(year, month + 1))}
-      />
+  <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 space-y-4 sm:space-y-6 pb-20">
+    <DashboardHeader
+      month={date.toLocaleString("default", { month: "long" })}
+      year={year}
+      onPrev={handlePrevMonth}
+      onNext={() => setDate(new Date(year, month + 1))}
+    />
 
-      {isReadOnly && (
-        <div className="bg-orange-900/20 border border-orange-500/50 rounded-lg p-3 sm:p-4 flex items-start gap-3">
-          <AlertTriangle className="w-5 h-5 text-orange-500 shrink-0 mt-0.5" />
-          <div>
-            <h3 className="font-semibold text-orange-400 text-sm sm:text-base">
-              Viewing Past Month (Read-Only)
-            </h3>
-            <p className="text-orange-300/80 text-xs sm:text-sm mt-1">
-              This month has ended. You cannot edit or add habits for past
-              months. Check the History page for detailed past month analytics.
-            </p>
+    {isReadOnly && (
+      <div className="bg-[#DC2626]/10 border border-[#DC2626]/40 rounded-lg p-3 sm:p-4 flex items-start gap-3">
+        <AlertTriangle className="w-5 h-5 text-[#DC2626] shrink-0 mt-0.5" />
+        <div>
+          <h3 className="font-semibold text-[#DC2626] text-sm sm:text-base">
+            Viewing Past Month (Read-Only)
+          </h3>
+          <p className="text-[#A8A29E] text-xs sm:text-sm mt-1">
+            This month has ended. You cannot edit or add habits for past
+            months. Check the History page for detailed past month analytics.
+          </p>
+        </div>
+      </div>
+    )}
+
+    <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-between items-start sm:items-center">
+      <h2 className="text-xl sm:text-2xl font-bold text-[#1C1917]">
+        Your Habits
+      </h2>
+
+      {!isReadOnly && (
+        <div className="flex gap-2 w-full sm:w-auto">
+          <div className="flex-1 sm:flex-initial">
+            <SetMonthlyGoalDialog
+              currentGoal={data.monthlyGoal}
+              habits={data.habits}
+              onSetGoal={handleSetGoal}
+            />
+          </div>
+          <div className="flex-1 sm:flex-initial">
+            <AddHabitDialog onAddHabit={handleAddHabit} />
           </div>
         </div>
       )}
-
-      <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-between items-start sm:items-center">
-        <h2 className="text-xl sm:text-2xl font-bold">Your Habits</h2>
-        {!isReadOnly && (
-          <div className="flex gap-2 w-full sm:w-auto">
-            <div className="flex-1 sm:flex-initial">
-              <SetMonthlyGoalDialog
-                currentGoal={data.monthlyGoal}
-                habits={data.habits}
-                onSetGoal={handleSetGoal}
-              />
-            </div>
-            <div className="flex-1 sm:flex-initial">
-              <AddHabitDialog onAddHabit={handleAddHabit} />
-            </div>
-          </div>
-        )}
-      </div>
-
-      <MonthlyGoalCard goal={data.monthlyGoal} />
-
-      <div className="space-y-4">
-        <SummaryCard
-          percentage={data.overallSummary?.percentage || 0}
-          completed={data.overallSummary?.completed || 0}
-          total={data.overallSummary?.total || 0}
-        />
-
-        <WeeklyProgress weeks={data.weeklyStats || []} />
-      </div>
-
-      <HabitsTable
-        habits={data.habits}
-        calendarDays={calendarDays}
-        habitLogs={data.habitLogsMap || {}}
-        onToggle={handleToggle}
-        onUpdate={fetchData}
-        year={year}
-        month={month}
-        isReadOnly={isReadOnly}
-      />
     </div>
-  );
+
+    <MonthlyGoalCard goal={data.monthlyGoal} />
+
+    <div className="space-y-4">
+      <SummaryCard
+        percentage={data.overallSummary?.percentage || 0}
+        completed={data.overallSummary?.completed || 0}
+        total={data.overallSummary?.total || 0}
+      />
+
+      <WeeklyProgress weeks={data.weeklyStats || []} />
+    </div>
+
+    <HabitsTable
+      habits={data.habits}
+      calendarDays={calendarDays}
+      habitLogs={data.habitLogsMap || {}}
+      onToggle={handleToggle}
+      onUpdate={fetchData}
+      year={year}
+      month={month}
+      isReadOnly={isReadOnly}
+    />
+  </div>
+);
+
 }

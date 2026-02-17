@@ -12,11 +12,9 @@ import {
   Target,
 } from "lucide-react";
 import {
-  LineChart,
-  Line,
+  CartesianGrid,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
   Area,
@@ -49,15 +47,10 @@ export default function HistoryPage() {
       if (response.ok) {
         const data = await response.json();
         setAvailableMonths(data.availableMonths || []);
-
         if (data.availableMonths && data.availableMonths.length > 0) {
           setSelectedMonth(data.availableMonths[0]);
         }
-      } else {
-        console.error("Failed to fetch available months");
       }
-    } catch (error) {
-      console.error("Error fetching available months:", error);
     } finally {
       setLoading(false);
     }
@@ -70,34 +63,20 @@ export default function HistoryPage() {
       if (response.ok) {
         const data = await response.json();
         setMonthData(data.monthData);
-      } else {
-        console.error("Failed to fetch month history");
       }
-    } catch (error) {
-      console.error("Error fetching month history:", error);
     } finally {
       setLoading(false);
     }
   };
 
   const monthNames = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
+    "January","February","March","April","May","June",
+    "July","August","September","October","November","December",
   ];
 
   if (loading && !availableMonths.length) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center min-h-screen bg-[#F8F5F2]">
         <Loader size={48} />
       </div>
     );
@@ -105,28 +84,26 @@ export default function HistoryPage() {
 
   if (availableMonths.length === 0) {
     return (
-      <div className="min-h-screen text-white p-4 sm:p-6 lg:p-8 pb-20">
+      <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 lg:p-8 pb-20">
         <div className="max-w-7xl mx-auto">
           <div className="mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-2">
-              <History className="w-6 h-6 sm:w-8 sm:h-8 text-purple-500" />
+              <History className="w-6 h-6 sm:w-8 sm:h-8 text-[#C08457]" />
               History
             </h1>
-            <p className="text-gray-400 text-sm sm:text-base mt-1">
+            <p className="text-[#A8A29E] text-sm sm:text-base mt-1">
               Your past month's habit tracking journey
             </p>
           </div>
-
-          <Card className="bg-gray-900 border-gray-800">
+          <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40">
             <CardContent className="py-12">
               <div className="text-center">
-                <Calendar className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-gray-300 mb-2">
+                <Calendar className="w-16 h-16 text-[#A8A29E] mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-[#1C1917] mb-2">
                   No Past Month History Available
                 </h3>
-                <p className="text-gray-500">
-                  Start tracking your habits and come back next month to see
-                  your history!
+                <p className="text-[#A8A29E]">
+                  Start tracking your habits and come back next month to see your history!
                 </p>
               </div>
             </CardContent>
@@ -137,21 +114,19 @@ export default function HistoryPage() {
   }
 
   return (
-    <div className="min-h-screen text-white p-4 sm:p-6 lg:p-8 pb-20">
+    <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 lg:p-8 pb-20">
       <div className="max-w-7xl mx-auto">
-        {/* Header with Month Selector */}
         <div className="mb-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-2">
-                <History className="w-6 h-6 sm:w-8 sm:h-8 text-purple-500" />
+                <History className="w-6 h-6 sm:w-8 sm:h-8 text-[#C08457]" />
                 History
               </h1>
-              <p className="text-gray-400 text-sm sm:text-base mt-1">
+              <p className="text-[#A8A29E] text-sm sm:text-base mt-1">
                 Your past month's habit tracking journey
               </p>
             </div>
-
             <div className="w-full sm:w-auto">
               <select
                 value={
@@ -166,7 +141,7 @@ export default function HistoryPage() {
                     month: parseInt(month),
                   });
                 }}
-                className="w-full sm:w-auto bg-gray-900 border border-gray-700 text-white rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full sm:w-auto bg-white border border-[#A8A29E]/50 text-[#1C1917] rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#C08457]"
               >
                 {availableMonths.map((m, index) => (
                   <option key={index} value={`${m.year}-${m.month}`}>
@@ -178,61 +153,57 @@ export default function HistoryPage() {
           </div>
         </div>
 
-        {/* Month Data Display */}
         {loading && monthData === null ? (
           <div className="flex items-center justify-center py-20">
             <Loader size={48} />
           </div>
         ) : monthData ? (
           <div className="space-y-6">
-            <Card className="bg-gray-900 border-gray-800">
+            <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40">
               <CardHeader>
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                  <CardTitle className="text-lg sm:text-xl text-white flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-purple-400" />
+                  <CardTitle className="text-lg sm:text-xl text-[#1C1917] flex items-center gap-2">
+                    <Calendar className="w-5 h-5 text-[#C08457]" />
                     {monthNames[monthData.month - 1]} {monthData.year}
                   </CardTitle>
                   <div className="flex gap-3 sm:gap-4">
                     <div className="text-center">
-                      <div className="text-2xl sm:text-3xl font-bold text-white">
+                      <div className="text-2xl sm:text-3xl font-bold text-[#1C1917]">
                         {monthData.percentage}%
                       </div>
-                      <div className="text-xs text-gray-400">Completion</div>
+                      <div className="text-xs text-[#A8A29E]">Completion</div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl sm:text-3xl font-bold text-purple-400">
+                      <div className="text-2xl sm:text-3xl font-bold text-[#C08457]">
                         {monthData.totalHabits}
                       </div>
-                      <div className="text-xs text-gray-400">Habits</div>
+                      <div className="text-xs text-[#A8A29E]">Habits</div>
                     </div>
                     <div className="text-center">
-                      <div
-                        className={`text-2xl sm:text-3xl font-bold ${monthData.percentage >= 50 ? "text-green-400" : "text-orange-400"}`}
-                      >
+                      <div className="text-2xl sm:text-3xl font-bold text-[#C08457]">
                         {monthData.percentage >= 50 ? (
                           <TrendingUp className="w-6 h-6 sm:w-7 sm:h-7" />
                         ) : (
                           <TrendingDown className="w-6 h-6 sm:w-7 sm:h-7" />
                         )}
                       </div>
-                      <div className="text-xs text-gray-400">Trend</div>
+                      <div className="text-xs text-[#A8A29E]">Trend</div>
                     </div>
                   </div>
                 </div>
               </CardHeader>
 
               <CardContent>
-                {/* Monthly Goal if exists */}
                 {monthData.monthlyGoal && (
-                  <div className="mb-4 p-3 bg-gray-800 rounded-lg border border-gray-700">
+                  <div className="mb-4 p-3 bg-[#F8F5F2] rounded-lg border border-[#A8A29E]/40">
                     <div className="flex items-start gap-2">
-                      <Target className="w-4 h-4 text-indigo-400 mt-0.5 shrink-0" />
+                      <Target className="w-4 h-4 text-[#C08457] mt-0.5 shrink-0" />
                       <div>
-                        <h4 className="font-semibold text-sm text-white">
+                        <h4 className="font-semibold text-sm text-[#1C1917]">
                           {monthData.monthlyGoal.title}
                         </h4>
                         {monthData.monthlyGoal.description && (
-                          <p className="text-xs text-gray-400 mt-1">
+                          <p className="text-xs text-[#A8A29E] mt-1">
                             {monthData.monthlyGoal.description}
                           </p>
                         )}
@@ -241,9 +212,8 @@ export default function HistoryPage() {
                   </div>
                 )}
 
-                {/* Productivity Line Chart */}
                 <div className="mt-4">
-                  <h4 className="text-sm font-medium text-gray-300 mb-3">
+                  <h4 className="text-sm font-medium text-[#A8A29E] mb-3">
                     Daily Productivity Trend
                   </h4>
                   <div className="h-48 sm:h-64">
@@ -253,54 +223,31 @@ export default function HistoryPage() {
                         margin={{ top: 5, right: 10, left: -20, bottom: 5 }}
                       >
                         <defs>
-                          <linearGradient
-                            id="gradient-history"
-                            x1="0"
-                            y1="0"
-                            x2="0"
-                            y2="1"
-                          >
-                            <stop
-                              offset="5%"
-                              stopColor="#8B5CF6"
-                              stopOpacity={0.8}
-                            />
-                            <stop
-                              offset="95%"
-                              stopColor="#8B5CF6"
-                              stopOpacity={0}
-                            />
+                          <linearGradient id="gradient-history" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stopColor="#C08457" stopOpacity={0.4} />
+                            <stop offset="95%" stopColor="#C08457" stopOpacity={0} />
                           </linearGradient>
                         </defs>
-                        <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                        <XAxis
-                          dataKey="day"
-                          stroke="#9CA3AF"
-                          tick={{ fill: "#9CA3AF", fontSize: 10 }}
-                        />
-                        <YAxis
-                          stroke="#9CA3AF"
-                          tick={{ fill: "#9CA3AF", fontSize: 10 }}
-                          domain={[0, 100]}
-                        />
+                        <CartesianGrid stroke="#A8A29E" strokeDasharray="3 3" />
+                        <XAxis dataKey="day" stroke="#A8A29E" tick={{ fill: "#A8A29E", fontSize: 10 }} />
+                        <YAxis stroke="#A8A29E" tick={{ fill: "#A8A29E", fontSize: 10 }} domain={[0, 100]} />
                         <Tooltip
                           contentStyle={{
-                            backgroundColor: "#1F2937",
-                            border: "1px solid #374151",
+                            backgroundColor: "#E7E5E4",
+                            border: "1px solid #A8A29E",
                             borderRadius: "8px",
                             fontSize: "12px",
                           }}
-                          labelStyle={{ color: "#F9FAFB" }}
+                          labelStyle={{ color: "#1C1917" }}
                           formatter={(value, name) => {
-                            if (name === "percentage")
-                              return [`${value}%`, "Completion"];
+                            if (name === "percentage") return [`${value}%`, "Completion"];
                             return [value, name];
                           }}
                         />
                         <Area
                           type="monotone"
                           dataKey="percentage"
-                          stroke="#8B5CF6"
+                          stroke="#C08457"
                           fillOpacity={1}
                           fill="url(#gradient-history)"
                           strokeWidth={2}
@@ -310,23 +257,22 @@ export default function HistoryPage() {
                   </div>
                 </div>
 
-                {/* Summary Stats */}
                 <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  <div className="bg-gray-800 rounded-lg p-3 border border-gray-700">
-                    <div className="text-xs text-gray-400">Completed</div>
-                    <div className="text-lg sm:text-xl font-bold text-green-400">
+                  <div className="bg-[#F8F5F2] rounded-lg p-3 border border-[#A8A29E]/40">
+                    <div className="text-xs text-[#A8A29E]">Completed</div>
+                    <div className="text-lg sm:text-xl font-bold text-[#C08457]">
                       {monthData.completed}
                     </div>
                   </div>
-                  <div className="bg-gray-800 rounded-lg p-3 border border-gray-700">
-                    <div className="text-xs text-gray-400">Total Possible</div>
-                    <div className="text-lg sm:text-xl font-bold text-gray-300">
+                  <div className="bg-[#F8F5F2] rounded-lg p-3 border border-[#A8A29E]/40">
+                    <div className="text-xs text-[#A8A29E]">Total Possible</div>
+                    <div className="text-lg sm:text-xl font-bold text-[#1C1917]">
                       {monthData.totalPossible}
                     </div>
                   </div>
-                  <div className="bg-gray-800 rounded-lg p-3 border border-gray-700 col-span-2 sm:col-span-1">
-                    <div className="text-xs text-gray-400">Days in Month</div>
-                    <div className="text-lg sm:text-xl font-bold text-purple-400">
+                  <div className="bg-[#F8F5F2] rounded-lg p-3 border border-[#A8A29E]/40 col-span-2 sm:col-span-1">
+                    <div className="text-xs text-[#A8A29E]">Days in Month</div>
+                    <div className="text-lg sm:text-xl font-bold text-[#C08457]">
                       {monthData.daysInMonth}
                     </div>
                   </div>
