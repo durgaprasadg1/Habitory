@@ -27,20 +27,17 @@ export async function GET(request) {
 
     await connectDB();
 
-    // Get month document
     let monthDoc = await Month.findOne({ userId, year, month });
 
     if (!monthDoc) {
       monthDoc = await Month.create({ userId, year, month });
     }
 
-    // Get all habits for this month
     const habits = await Habit.find({
       userId,
       monthId: monthDoc._id,
     }).sort({ createdAt: 1 });
 
-    // Get habit logs for the month
     const startDate = new Date(year, month - 1, 1);
     const endDate = new Date(year, month, 0, 23, 59, 59);
 
@@ -49,7 +46,6 @@ export async function GET(request) {
       date: { $gte: startDate, $lte: endDate },
     });
 
-    // Calculate analytics
     const daysInMonth = new Date(year, month, 0).getDate();
     const analytics = calculateAnalytics(
       habits,
@@ -70,14 +66,12 @@ export async function GET(request) {
 }
 
 function calculateAnalytics(habits, habitLogs, year, month, daysInMonth) {
-  // Overall stats
   const totalPossible = habits.length * daysInMonth;
   const completedLogs = habitLogs.filter((log) => log.completed);
   const completedCount = completedLogs.length;
   const overallPercentage =
     totalPossible > 0 ? Math.round((completedCount / totalPossible) * 100) : 0;
 
-  // Per habit analytics
   const habitStats = habits.map((habit) => {
     const habitLogCount = habitLogs.filter(
       (log) => log.habitId.toString() === habit._id.toString() && log.completed,
@@ -95,7 +89,6 @@ function calculateAnalytics(habits, habitLogs, year, month, daysInMonth) {
     };
   });
 
-  // Category-wise analytics
   const categoryMap = {};
   habits.forEach((habit) => {
     const category = habit.category || "Uncategorized";
@@ -131,7 +124,6 @@ function calculateAnalytics(habits, habitLogs, year, month, daysInMonth) {
     }),
   );
 
-  // Daily completion trend
   const dailyTrend = [];
   for (let day = 1; day <= daysInMonth; day++) {
     const dayLogs = habitLogs.filter((log) => {
@@ -161,7 +153,6 @@ function calculateAnalytics(habits, habitLogs, year, month, daysInMonth) {
 
  
 
-  // Streak calculation
   const longestStreak = calculateLongestStreak(habitLogs, habits, daysInMonth);
   const currentStreak = calculateCurrentStreak(habitLogs, habits, daysInMonth);
 
@@ -255,7 +246,6 @@ function calculateCurrentStreak(habitLogs, habits, daysInMonth) {
   const currentMonth = today.getMonth() + 1;
   const currentYear = today.getFullYear();
 
-  // Start from today and go backwards
   for (let day = Math.min(currentDay, daysInMonth); day >= 1; day--) {
     const dayLogs = habitLogs.filter((log) => {
       const logDay = new Date(log.date).getDate();

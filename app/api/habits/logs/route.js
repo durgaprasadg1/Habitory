@@ -34,12 +34,10 @@ export async function POST(request) {
     });
 
     if (existingLog) {
-      // Toggle completion
       existingLog.completed = !existingLog.completed;
       await existingLog.save();
       return NextResponse.json(existingLog);
     } else {
-      // Create new log with completed = true
       const newLog = await HabitLog.create({
         userId: userId,
         habitId: new mongoose.Types.ObjectId(habitId),
