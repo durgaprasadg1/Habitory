@@ -5,7 +5,6 @@ import { connectDB } from "@/lib/connectDb";
 import User from "@/models/user";
 
 export async function POST(req) {
-  // Get the Svix headers for verification
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
@@ -18,29 +17,24 @@ export async function POST(req) {
     );
   }
 
-  // Get the headers
   const headerPayload = await headers();
   const svix_id = headerPayload.get("svix-id");
   const svix_timestamp = headerPayload.get("svix-timestamp");
   const svix_signature = headerPayload.get("svix-signature");
 
-  // If there are no headers, error out
   if (!svix_id || !svix_timestamp || !svix_signature) {
     return new Response("Error: Missing svix headers", {
       status: 400,
     });
   }
 
-  // Get the body
   const payload = await req.json();
   const body = JSON.stringify(payload);
 
-  // Create a new Svix instance with your secret
   const wh = new Webhook(WEBHOOK_SECRET);
 
   let evt;
 
-  // Verify the payload with the headers
   try {
     evt = wh.verify(body, {
       "svix-id": svix_id,
@@ -54,7 +48,6 @@ export async function POST(req) {
     });
   }
 
-  // Handle the webhook
   const eventType = evt.type;
 
   await connectDB();
@@ -99,7 +92,7 @@ async function handleUserCreated(data) {
       name: `${first_name || ""} ${last_name || ""}`.trim() || "User",
       profileImage: image_url || "",
     });
-    console.log("✅ New user created in MongoDB:", newUser.email);
+    console.log("New user created in MongoDB:", newUser.email);
   } else {
     console.log("User already exists in MongoDB:", existingUser.email);
   }
@@ -118,7 +111,7 @@ async function handleUserUpdated(data) {
     { new: true, upsert: true },
   );
 
-  console.log("✅ User updated in MongoDB:", updatedUser.email);
+  console.log("User updated in MongoDB:", updatedUser.email);
 }
 
 async function handleUserDeleted(data) {
@@ -127,7 +120,7 @@ async function handleUserDeleted(data) {
   const deletedUser = await User.findOneAndDelete({ clerkId: id });
 
   if (deletedUser) {
-    console.log("✅ User deleted from MongoDB:", deletedUser.email);
+    console.log("User deleted from MongoDB:", deletedUser.email);
   } else {
     console.log("User not found in MongoDB for deletion:", id);
   }

@@ -4,7 +4,6 @@ import { TrendingUp, TrendingDown, Target, Calendar } from "lucide-react";
 export default function OverviewCards({ overview, streaks }) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-      {/* Total Habits */}
       <Card className="bg-gray-900 border-gray-800">
         <CardContent className="pt-4 sm:pt-6">
           <div className="flex flex-col">

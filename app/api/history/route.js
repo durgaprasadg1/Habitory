@@ -14,7 +14,6 @@ export async function GET(request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Ensure user is synced
     const clerkUser = await currentUser();
     if (clerkUser) {
       await syncUser(clerkUser);
@@ -26,12 +25,10 @@ export async function GET(request) {
 
     await connectDB();
 
-    // Get current month and year
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth() + 1;
 
-    // Find all months before the current month
     const pastMonths = await Month.find({
       userId,
       $or: [
@@ -44,7 +41,6 @@ export async function GET(request) {
       return NextResponse.json({ availableMonths: [], monthData: null });
     }
 
-    // If no specific month requested, return available months list only
     if (!requestedYear || !requestedMonth) {
       const availableMonths = pastMonths.map((m) => ({
         year: m.year,
@@ -53,7 +49,6 @@ export async function GET(request) {
       return NextResponse.json({ availableMonths, monthData: null });
     }
 
-    // Find the requested month
     const year = parseInt(requestedYear);
     const month = parseInt(requestedMonth);
 
@@ -68,7 +63,6 @@ export async function GET(request) {
       );
     }
 
-    // Get detailed data for the requested month
     const habits = await Habit.find({
       userId,
       monthId: monthDoc._id,
@@ -83,7 +77,6 @@ export async function GET(request) {
       date: { $gte: startDate, $lte: endDate },
     });
 
-    // Calculate daily completion
     const dailyData = [];
     for (let day = 1; day <= daysInMonth; day++) {
       const dayLogs = habitLogs.filter((log) => {

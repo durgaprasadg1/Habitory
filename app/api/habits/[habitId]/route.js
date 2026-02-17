@@ -5,10 +5,7 @@ import Habit from "@/models/habit";
 import HabitLog from "@/models/habitLog";
 import mongoose from "mongoose";
 
-/**
- * GET - Get a specific habit by ID
- * /api/habits/[habitId]
- */
+
 export async function GET(request, { params }) {
   try {
     const { userId } = await auth();
@@ -27,7 +24,6 @@ export async function GET(request, { params }) {
       return NextResponse.json({ error: "Habit not found" }, { status: 404 });
     }
 
-    // Check ownership
     if (habit.userId !== userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
@@ -42,10 +38,7 @@ export async function GET(request, { params }) {
   }
 }
 
-/**
- * PUT - Update a habit
- * /api/habits/[habitId]
- */
+
 export async function PUT(request, { params }) {
   try {
     const { userId } = await auth();
@@ -66,12 +59,10 @@ export async function PUT(request, { params }) {
       return NextResponse.json({ error: "Habit not found" }, { status: 404 });
     }
 
-    // Check ownership
     if (habit.userId !== userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
-    // Update fields
     if (name !== undefined) habit.name = name;
     if (category !== undefined) habit.category = category;
     if (isGoalHabit !== undefined) habit.isGoalHabit = isGoalHabit;
@@ -92,18 +83,12 @@ export async function PUT(request, { params }) {
   }
 }
 
-/**
- * PATCH - Partially update a habit
- * /api/habits/[habitId]
- */
+
 export async function PATCH(request, { params }) {
   return PUT(request, { params });
 }
 
-/**
- * DELETE - Delete a habit and all its logs
- * /api/habits/[habitId]
- */
+
 export async function DELETE(request, { params }) {
   try {
     const { userId } = await auth();
@@ -122,17 +107,14 @@ export async function DELETE(request, { params }) {
       return NextResponse.json({ error: "Habit not found" }, { status: 404 });
     }
 
-    // Check ownership
     if (habit.userId !== userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
     }
 
-    // Delete all logs associated with this habit
     await HabitLog.deleteMany({
       habitId: new mongoose.Types.ObjectId(habitId),
     });
 
-    // Delete the habit
     await Habit.findByIdAndDelete(habitId);
 
     return NextResponse.json({

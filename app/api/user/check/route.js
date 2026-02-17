@@ -3,10 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { connectDB } from "@/lib/connectDb";
 import User from "@/models/user";
 
-/**
- * Check if current user exists in MongoDB
- * GET /api/user/check
- */
+
 export async function GET() {
   try {
     const { userId } = await auth();

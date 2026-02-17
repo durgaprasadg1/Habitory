@@ -25,7 +25,6 @@ export async function PUT(request) {
 
     await connectDB();
 
-    // Find or create month document
     let monthDoc = await Month.findOne({
       userId: userId,
       year,
@@ -40,16 +39,13 @@ export async function PUT(request) {
       });
     }
 
-    // Update goal fields
     monthDoc.goalTitle = goalTitle;
     monthDoc.goalDescription = goalDescription;
     monthDoc.goalHabitId = goalHabitId
       ? new mongoose.Types.ObjectId(goalHabitId)
       : null;
 
-    // If a habit is linked, update its isGoalHabit flag
     if (goalHabitId) {
-      // First, remove isGoalHabit from all habits in this month
       await Habit.updateMany(
         {
           userId: userId,
@@ -58,7 +54,6 @@ export async function PUT(request) {
         { isGoalHabit: false },
       );
 
-      // Then set the selected habit as goal habit
       await Habit.findByIdAndUpdate(goalHabitId, { isGoalHabit: true });
     }
 

@@ -15,7 +15,6 @@ export async function GET(request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    // Ensure user is synced to MongoDB (fallback if webhook didn't trigger)
     const clerkUser = await currentUser();
     if (clerkUser) {
       await syncUser(clerkUser);
