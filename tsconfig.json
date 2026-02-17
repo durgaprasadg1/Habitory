@@ -29,6 +29,6 @@
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
     "**/*.mts"
-, "app/page.jsx", "app/layout.tsx"  ],
+, "app/page.jsx", "app/layout.tsx", "app/components/Dashboard/AddHabitapp/components/Dashboard/EditHabitDialog.jsxabitDialog.jsx", "app/components/Dashboard/SetMonthlyGoalDialog.jsx"  ],
   "exclude": ["node_modules"]
 }

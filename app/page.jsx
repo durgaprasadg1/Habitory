@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 export default function HomePage() {
   const router = useRouter();
   const handleGetStart = () => {
-    router.push("/user/dashboard");
+    router.push("/dashboard");
   };
   return (
     <main className="relative min-h-screen overflow-hidden bg-linear-to-br from-[#0B0F2A] via-[#11183C] to-[#0E1433] text-white">
@@ -33,12 +33,7 @@ export default function HomePage() {
               Get Started
             </Button>
 
-            <Button
-              variant="outline"
-              className="w-full rounded-xl border-white/20 bg-white/5 backdrop-blur-md hover:bg-white/10 text-white py-6"
-            >
-              View Demo
-            </Button>
+            
           </div>
         </div>
       </section>

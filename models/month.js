@@ -1,18 +1,30 @@
-const monthSchema = new mongoose.Schema({
-  userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+import mongoose from "mongoose";
 
-  year: { type: Number, required: true },
-  month: { type: Number, required: true }, // 1-12
+// Clear cache to prevent type casting issues
+if (mongoose.models.Month) {
+  delete mongoose.models.Month;
+}
 
-  goalTitle: { type: String },
-  goalDescription: { type: String },
+const monthSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: String,
+      required: true,
+    },
 
-  goalHabitId: { type: mongoose.Schema.Types.ObjectId, ref: "Habit" },
+    year: { type: Number, required: true },
+    month: { type: Number, required: true }, // 1-12
 
-  goalEditedOnce: { type: Boolean, default: false },
-  goalLocked: { type: Boolean, default: false },
+    goalTitle: { type: String },
+    goalDescription: { type: String },
 
-}, { timestamps: true });
+    goalHabitId: { type: mongoose.Schema.Types.ObjectId, ref: "Habit" },
+
+    goalEditedOnce: { type: Boolean, default: false },
+    goalLocked: { type: Boolean, default: false },
+  },
+  { timestamps: true },
+);
 
 monthSchema.index({ userId: 1, year: 1, month: 1 }, { unique: true });
 
