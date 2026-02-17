@@ -10,7 +10,6 @@ import mongoose from "mongoose";
 export async function GET(request) {
   try {
     const { userId } = await auth();
-    console.log("Authenticated user ID:", userId);
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }

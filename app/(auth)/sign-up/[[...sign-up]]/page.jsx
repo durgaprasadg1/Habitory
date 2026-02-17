@@ -4,32 +4,35 @@ import { SignUp } from "@clerk/nextjs";
 
 export default function Page() {
   return (
-    <div className="min-h-screen  flex items-center justify-center px-4 bg-slate-950">
-        <div className="mt-10">
-
-       
-      <SignUp
-        path="/sign-up"
-        routing="path"
-        signInUrl="/sign-in"
-        afterSignUpUrl="/dashboard"
-        appearance={{
-          elements: {
-            rootBox: "w-full flex justify-center",
-            card: "bg-slate-900 border border-slate-800 shadow-xl rounded-2xl p-8 w-full max-w-md",
-            headerTitle: "text-white text-xl font-semibold",
-            headerSubtitle: "text-slate-400",
-            socialButtonsBlockButton:
-              "bg-slate-800 border border-slate-700 text-white hover:bg-slate-700",
-            formFieldInput:
-              "bg-slate-800 border border-slate-700 text-white placeholder:text-slate-400",
-            formButtonPrimary: "bg-indigo-600 hover:bg-indigo-500 text-white",
-            footerActionLink: "text-indigo-400 hover:text-indigo-300",
-            footer: "bg-transparent border-none",
-          },
-        }}
-      />
+    <div className="min-h-screen flex items-center justify-center px-4 bg-[#F8F5F2]">
+      <div className="mt-10">
+        <SignUp
+          path="/sign-up"
+          routing="path"
+          signInUrl="/sign-in"
+          afterSignUpUrl="/dashboard"
+          appearance={{
+            elements: {
+              rootBox: "w-full flex justify-center",
+              card:
+                "bg-[#E7E5E4] border border-[#A8A29E]/40 shadow-xl rounded-2xl p-8 w-full max-w-md",
+              headerTitle:
+                "text-[#1C1917] text-xl font-semibold",
+              headerSubtitle:
+                "text-[#A8A29E]",
+              socialButtonsBlockButton:
+                "bg-white border border-[#A8A29E]/50 text-[#1C1917] hover:bg-[#E7E5E4]",
+              formFieldInput:
+                "bg-white border border-[#A8A29E]/50 text-[#1C1917] placeholder:text-[#A8A29E] focus:border-[#C08457] focus:ring-1 focus:ring-[#C08457]",
+              formButtonPrimary:
+                "bg-[#C08457] hover:opacity-90 text-white",
+              footerActionLink:
+                "text-[#C08457] hover:opacity-80",
+              footer: "bg-transparent border-none",
+            },
+          }}
+        />
+      </div>
     </div>
-     </div>
   );
 }

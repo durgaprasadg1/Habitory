@@ -13,10 +13,10 @@ import { TrendingUp } from "lucide-react";
 
 export default function WeeklyTrendChart({ weeklyStats }) {
   return (
-    <Card className="bg-gray-900 border-gray-800">
+    <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40">
       <CardHeader>
-        <CardTitle className="text-base sm:text-lg text-white flex items-center gap-2">
-          <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-green-500" />
+        <CardTitle className="text-base sm:text-lg text-[#1C1917] flex items-center gap-2">
+          <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-[#C08457]" />
           Weekly Breakdown
         </CardTitle>
       </CardHeader>
@@ -27,42 +27,44 @@ export default function WeeklyTrendChart({ weeklyStats }) {
               data={weeklyStats}
               margin={{ top: 5, right: 10, left: -20, bottom: 20 }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <CartesianGrid stroke="#A8A29E" strokeDasharray="3 3" />
               <XAxis
                 dataKey="week"
-                stroke="#9CA3AF"
-                tick={{ fill: "#9CA3AF", fontSize: 11 }}
+                stroke="#A8A29E"
+                tick={{ fill: "#A8A29E", fontSize: 11 }}
                 label={{
                   value: "Week",
                   position: "insideBottom",
                   offset: -15,
-                  fill: "#9CA3AF",
+                  fill: "#A8A29E",
                   fontSize: 12,
                 }}
               />
               <YAxis
-                stroke="#9CA3AF"
-                tick={{ fill: "#9CA3AF", fontSize: 11 }}
+                stroke="#A8A29E"
+                tick={{ fill: "#A8A29E", fontSize: 11 }}
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "#1F2937",
-                  border: "1px solid #374151",
+                  backgroundColor: "#E7E5E4",
+                  border: "1px solid #A8A29E",
                   borderRadius: "8px",
                   fontSize: "12px",
                 }}
-                labelStyle={{ color: "#F9FAFB" }}
+                labelStyle={{ color: "#1C1917" }}
               />
-              <Legend wrapperStyle={{ fontSize: "11px", paddingTop: "10px" }} />
+              <Legend
+                wrapperStyle={{ fontSize: "11px", paddingTop: "10px", color: "#1C1917" }}
+              />
               <Bar
                 dataKey="completed"
-                fill="#10B981"
+                fill="#C08457"
                 name="Completed"
                 radius={[4, 4, 0, 0]}
               />
               <Bar
                 dataKey="total"
-                fill="#6B7280"
+                fill="#A8A29E"
                 name="Total"
                 radius={[4, 4, 0, 0]}
               />

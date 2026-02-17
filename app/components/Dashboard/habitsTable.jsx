@@ -16,23 +16,27 @@ export default function HabitsTable({
   };
 
   return (
-    <div className="overflow-x-auto -mx-4 sm:mx-0  sm:px-0">
-      <table className="w-full min-w-max">
+    <div className="overflow-x-auto -mx-4 sm:mx-0 sm:px-0 rounded-xl border border-[#A8A29E]/30 bg-[#E7E5E4]">
+      <table className="w-full min-w-max text-[#1C1917]">
         <thead>
-          <tr className="border-b border-gray-800">
-            <th className="text-left py-2 sm:py-3 px-2 sm:px-4 sticky left-0 bg-gray-950 z-10 text-sm sm:text-base w-50">
+          <tr className="border-b border-[#A8A29E]/40 bg-[#F8F5F2]">
+            <th className="text-left py-3 px-4 sticky left-0 bg-[#F8F5F2] z-10 text-sm font-semibold min-w-[160px]">
               Habit
             </th>
+
             {!isReadOnly && (
-              <th className="text-center py-2 sm:py-3 px-1 sm:px-2 w-12 sm:w-16 text-xs sm:text-sm">
+              <th className="text-center py-3 px-2 w-16 text-xs font-semibold">
                 Actions
               </th>
             )}
+
             {calendarDays.map((day, i) => (
               <th
                 key={i}
-                className={`text-center py-1 sm:py-2 px-1 sm:px-2 text-xs ${
-                  isWeekBoundary(i) ? "border-r-2 border-indigo-600" : ""
+                className={`text-center py-2 px-2 text-xs font-medium ${
+                  isWeekBoundary(i)
+                    ? "border-r-2 border-[#C08457]/40"
+                    : ""
                 }`}
               >
                 {day || ""}
@@ -40,21 +44,26 @@ export default function HabitsTable({
             ))}
           </tr>
         </thead>
+
         <tbody>
           {habits.map((habit) => (
-            <tr key={habit._id} className="border-b border-gray-800">
-              <td className="py-2 sm:py-3 px-2 sm:px-4 sticky left-0 bg-gray-950 z-10 font-medium text-sm sm:text-base">
-                <div className="max-w-30 sm:max-w-none truncate sm:whitespace-normal">
+            <tr
+              key={habit._id}
+              className="border-b border-[#A8A29E]/30 hover:bg-[#F8F5F2] transition-colors"
+            >
+              <td className="py-3 px-4 sticky left-0 bg-[#E7E5E4] z-10 font-medium text-sm">
+                <div className="truncate sm:whitespace-normal">
                   {habit.name}
                 </div>
                 {habit.category && (
-                  <span className="ml-1 sm:ml-2 text-xs text-gray-500">
+                  <span className="ml-1 text-xs text-[#A8A29E]">
                     ({habit.category})
                   </span>
                 )}
               </td>
+
               {!isReadOnly && (
-                <td className="text-center py-2 sm:py-3 px-1 sm:px-2">
+                <td className="text-center py-3 px-2">
                   <EditHabitDialog
                     habit={habit}
                     onUpdate={onUpdate}
@@ -62,11 +71,14 @@ export default function HabitsTable({
                   />
                 </td>
               )}
+
               {calendarDays.map((day, i) => (
                 <td
                   key={i}
-                  className={`text-center py-1 sm:py-2 ${
-                    isWeekBoundary(i) ? "border-r-2 border-indigo-600" : ""
+                  className={`text-center py-2 ${
+                    isWeekBoundary(i)
+                      ? "border-r-2 border-[#C08457]/40"
+                      : ""
                   }`}
                 >
                   {day && (
@@ -76,10 +88,10 @@ export default function HabitsTable({
                         onToggle(habit._id, new Date(year, month, day))
                       }
                       disabled={isReadOnly}
-                      className={`w-4 h-4 sm:w-5 sm:h-5 rounded border flex items-center justify-center transition-colors ${
+                      className={`w-5 h-5 rounded-md border flex items-center justify-center transition-all duration-150 ${
                         habitLogs[`${habit._id}-${day}`]
-                          ? "bg-indigo-600 border-indigo-500"
-                          : "border-gray-700 hover:border-gray-500"
+                          ? "bg-[#C08457] border-[#C08457]"
+                          : "border-[#A8A29E]/60 hover:border-[#C08457]"
                       } ${
                         isReadOnly
                           ? "cursor-not-allowed opacity-60"
@@ -87,7 +99,7 @@ export default function HabitsTable({
                       }`}
                     >
                       {habitLogs[`${habit._id}-${day}`] && (
-                        <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-white gap-2" />
+                        <Check className="w-3 h-3 text-white" />
                       )}
                     </button>
                   )}

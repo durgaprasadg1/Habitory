@@ -11,13 +11,12 @@ import {
 } from "recharts";
 
 export default function HabitsChart({ habitStats }) {
-  // Limit to top 10 habits for mobile view
   const displayHabits = habitStats.slice(0, 10);
 
   return (
-    <Card className="bg-gray-900 border-gray-800">
+    <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40">
       <CardHeader>
-        <CardTitle className="text-base sm:text-lg text-white">
+        <CardTitle className="text-base sm:text-lg text-[#1C1917]">
           Habit Performance
         </CardTitle>
       </CardHeader>
@@ -28,38 +27,41 @@ export default function HabitsChart({ habitStats }) {
               data={displayHabits}
               margin={{ top: 5, right: 10, left: -20, bottom: 5 }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <CartesianGrid stroke="#A8A29E" strokeDasharray="3 3" />
               <XAxis
                 dataKey="habitName"
-                stroke="#9CA3AF"
-                tick={{ fill: "#9CA3AF", fontSize: 11 }}
+                stroke="#A8A29E"
+                tick={{ fill: "#A8A29E", fontSize: 11 }}
                 angle={-45}
                 textAnchor="end"
                 height={80}
               />
               <YAxis
-                stroke="#9CA3AF"
-                tick={{ fill: "#9CA3AF", fontSize: 11 }}
+                stroke="#A8A29E"
+                tick={{ fill: "#A8A29E", fontSize: 11 }}
               />
               <Tooltip
                 contentStyle={{
-                  backgroundColor: "#1F2937",
-                  border: "1px solid #374151",
+                  backgroundColor: "#E7E5E4",
+                  border: "1px solid #A8A29E",
                   borderRadius: "8px",
                   fontSize: "12px",
                 }}
-                labelStyle={{ color: "#F9FAFB" }}
+                labelStyle={{ color: "#1C1917" }}
               />
-              <Legend wrapperStyle={{ fontSize: "12px" }} iconType="circle" />
+              <Legend
+                wrapperStyle={{ fontSize: "12px", color: "#1C1917" }}
+                iconType="circle"
+              />
               <Bar
                 dataKey="completed"
-                fill="#8B5CF6"
+                fill="#C08457"
                 name="Completed"
                 radius={[8, 8, 0, 0]}
               />
               <Bar
                 dataKey="total"
-                fill="#4B5563"
+                fill="#A8A29E"
                 name="Total Days"
                 radius={[8, 8, 0, 0]}
               />
