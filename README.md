@@ -22,10 +22,10 @@ A modern, full-stack habit tracking application built with Next.js 14+ that help
 - **Language**: JavaScript/TypeScript
 - **Authentication**: [Clerk](https://clerk.com/)
 - **Database**: MongoDB (via Mongoose)
+- **Validation**: [Zod](https://zod.dev/) for schema validation
 - **Styling**: Tailwind CSS
 - **UI Components**: Custom components with shadcn/ui
 - **Charts**: Interactive data visualizations
-
 
 ## 🛠️ Getting Started
 
@@ -86,8 +86,78 @@ A modern, full-stack habit tracking application built with Next.js 14+ that help
 
    Navigate to [http://localhost:3000](http://localhost:3000)
 
+## � Project Structure
 
-## 🗄️ Database Models
+```
+habit-tracker/
+├── app/
+│   ├── (auth)/           # Authentication routes
+│   ├── (user)/           # Protected user routes
+│   ├── api/              # API routes
+│   └── components/       # Page-specific components
+├── components/
+│   └── ui/               # Reusable UI components
+├── lib/                  # Utility functions
+├── models/               # Database models
+│   ├── habit.js
+│   ├── habitLog.js
+│   ├── month.js
+│   └── user.js
+├── validators/           # Zod validation schemas
+│   ├── habit.validators.js
+│   ├── habitLog.validators.js
+│   ├── month.validators.js
+│   ├── user.validators.js
+│   ├── analytics.validators.js
+│   ├── index.js
+│   └── README.md
+└── public/              # Static assets
+```
+
+## 🛡️ Data Validation
+
+All API endpoints use **Zod** for comprehensive data validation. This ensures:
+
+- ✅ Type safety across the application
+- ✅ Consistent error messages
+- ✅ Input sanitization and transformation
+- ✅ Protection against invalid data
+
+### Using Validators
+
+```javascript
+import { validateCreateHabit } from "@/validators";
+
+const validation = validateCreateHabit(data);
+if (!validation.success) {
+  // Handle validation errors
+  return { error: validation.error.errors };
+}
+
+// Use validated data
+const habit = await createHabit(validation.data);
+```
+
+For detailed documentation and examples, see [validators/README.md](validators/README.md).
+
+## 📡 API Routes
+
+| Endpoint                | Method      | Description                          |
+| ----------------------- | ----------- | ------------------------------------ |
+| `/api/habits`           | GET, POST   | Fetch all habits or create new habit |
+| `/api/habits/[habitId]` | PUT, DELETE | Update or delete specific habit      |
+| `/api/habits/logs`      | GET, POST   | Fetch or create habit logs           |
+| `/api/dashboard`        | GET         | Get dashboard data                   |
+| `/api/analytics`        | GET         | Get analytics data                   |
+| `/api/history`          | GET         | Get habit history                    |
+| `/api/monthly-goal`     | GET, POST   | Manage monthly goals                 |
+| `/api/user/check`       | GET         | Check user status                    |
+| `/api/sync-user`        | POST        | Sync user data                       |
+| `/api/webhooks/clerk`   | POST        | Handle Clerk webhooks                |
+
+> All endpoints validate input data using Zod schemas before processing.
+
+## �🗄️ Database Models
 
 ### User
 
