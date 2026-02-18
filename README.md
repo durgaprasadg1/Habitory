@@ -41,7 +41,7 @@ A modern, full-stack habit tracking application built with Next.js 14+ that help
 
    ```bash
    git clone <repository-url>
-   cd habit-tracker
+   cd habitory
    ```
 
 2. **Install dependencies**
