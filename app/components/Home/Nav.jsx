@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useAuth, useClerk } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import Logo from "../Brand/Logo";
+import Image from "next/image";
 export default function AuthNavbar() {
   const router = useRouter();
   const { isSignedIn } = useAuth();
@@ -41,13 +42,16 @@ export default function AuthNavbar() {
             Login
           </Button>
         </div>
-      ) : (
-        <Button
+      ) : (<>
+        
+      <Button
           onClick={handleLogout}
           className="bg-[#DC2626] hover:opacity-90 text-white rounded-xl px-4 text-sm"
         >
           Logout
         </Button>
+      </>
+        
       )}
     </nav>
   );

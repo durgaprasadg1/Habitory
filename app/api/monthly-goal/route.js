@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { connectDB } from "@/lib/connectDb";
+import { dbConnect } from "@/lib/connectDb";
 import Month from "@/models/month";
 import Habit from "@/models/habit";
 import mongoose from "mongoose";
@@ -23,7 +23,7 @@ export async function PUT(request) {
       );
     }
 
-    await connectDB();
+    await dbConnect();
 
     let monthDoc = await Month.findOne({
       userId: userId,
@@ -68,7 +68,7 @@ export async function PUT(request) {
       },
     });
   } catch (error) {
-    console.error("Error updating monthly goal:", error);
+    console.log("Error updating monthly goal:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

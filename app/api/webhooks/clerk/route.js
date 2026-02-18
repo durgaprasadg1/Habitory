@@ -1,14 +1,14 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
-import { connectDB } from "@/lib/connectDb";
+import { dbConnect } from "@/lib/connectDb";
 import User from "@/models/user";
 
 export async function POST(req) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
 
   if (!WEBHOOK_SECRET) {
-    console.error("WEBHOOK_SECRET is not set");
+    console.log("WEBHOOK_SECRET is not set");
     return new Response(
       "Error: Please add WEBHOOK_SECRET from Clerk Dashboard to .env",
       {
@@ -42,7 +42,7 @@ export async function POST(req) {
       "svix-signature": svix_signature,
     });
   } catch (err) {
-    console.error("Error verifying webhook:", err);
+    console.log("Error verifying webhook:", err);
     return new Response("Error: Verification failed", {
       status: 400,
     });
@@ -50,7 +50,7 @@ export async function POST(req) {
 
   const eventType = evt.type;
 
-  await connectDB();
+  await dbConnect();
 
   try {
     switch (eventType) {
@@ -72,7 +72,7 @@ export async function POST(req) {
       { status: 200 },
     );
   } catch (error) {
-    console.error("Error processing webhook:", error);
+    console.log("Error processing webhook:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

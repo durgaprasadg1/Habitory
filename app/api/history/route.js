@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
-import { connectDB } from "@/lib/connectDb";
+import { dbConnect } from "@/lib/connectDb";
 import Month from "@/models/month";
 import Habit from "@/models/habit";
 import HabitLog from "@/models/habitLog";
@@ -23,7 +23,7 @@ export async function GET(request) {
     const requestedYear = searchParams.get("year");
     const requestedMonth = searchParams.get("month");
 
-    await connectDB();
+    await dbConnect();
 
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
@@ -116,7 +116,7 @@ export async function GET(request) {
 
     return NextResponse.json({ availableMonths, monthData });
   } catch (error) {
-    console.error("Error fetching history:", error);
+    console.log("Error fetching history:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

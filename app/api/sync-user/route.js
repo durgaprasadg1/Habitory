@@ -25,7 +25,7 @@ export async function POST() {
       user: mongoUser,
     });
   } catch (error) {
-    console.error("Error in sync endpoint:", error);
+    console.log("Error in sync endpoint:", error);
     return NextResponse.json({ error: "Failed to sync user" }, { status: 500 });
   }
 }

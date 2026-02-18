@@ -30,10 +30,10 @@ export default function AnalyticsPage() {
         const data = await response.json();
         setAnalytics(data);
       } else {
-        console.error("Failed to fetch analytics");
+        console.log("Failed to fetch analytics");
       }
     } catch (error) {
-      console.error("Error fetching analytics:", error);
+      console.log("Error fetching analytics:", error);
     } finally {
       setLoading(false);
     }
@@ -77,7 +77,7 @@ export default function AnalyticsPage() {
 
   if (!analytics) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-[#F8F5F2]">
+      <div className="flex items-center justify-center min-h-screen bg-[#F8F5F2] ">
         <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40 p-6">
           <p className="text-[#A8A29E]">
             No analytics data available
@@ -88,7 +88,7 @@ export default function AnalyticsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 lg:p-8">
+    <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 lg:p-8 rounded-3xl">
       <div className="max-w-7xl mx-auto mb-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
@@ -101,7 +101,6 @@ export default function AnalyticsPage() {
             </p>
           </div>
 
-          {/* Month Selector */}
           <div className="flex items-center gap-2 bg-[#E7E5E4] rounded-lg p-2 border border-[#A8A29E]/40">
             <button
               onClick={() => handleMonthChange(-1)}
