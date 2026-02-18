@@ -25,7 +25,7 @@ export default function Logo({ size = 40, showText = true }) {
       </svg>
 
       {showText && (
-        <span className="text-xl font-semibold text-[#1C1917] tracking-wide">
+        <span className="text-lg font-semibold text-[#1C1917] tracking-wide">
           Habitory
         </span>
       )}

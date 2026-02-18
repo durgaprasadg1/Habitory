@@ -16,7 +16,7 @@ export default function HabitsTable({
   };
 
   return (
-    <div className="overflow-x-auto -mx-4 sm:mx-0 sm:px-0 rounded-xl border border-[#A8A29E]/30 bg-[#E7E5E4]">
+    <div className="overflow-x-auto -mx-4 sm:mx-0 sm:px-0 rounded-xl border border-[#A8A29E]/30 bg-[#E7E5E4] ">
       <table className="w-full min-w-max text-[#1C1917]">
         <thead>
           <tr className="border-b border-[#A8A29E]/40 bg-[#F8F5F2]">

@@ -17,6 +17,9 @@ export default function HomePage() {
 
       <section className="relative z-10 px-5 pt-16 pb-20 flex flex-col items-center text-center gap-6">
         <div className="bg-[#E7E5E4] border border-[#A8A29E]/40 rounded-3xl p-8 w-full max-w-md shadow-lg">
+          <h1 className="text-3xl font-semibold leading-tight">
+            
+          </h1>
           <h2 className="text-3xl font-semibold leading-tight">
             Build Discipline.
             <span className="block text-[#C08457]">
