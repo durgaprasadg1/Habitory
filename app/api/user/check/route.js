@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { connectDB } from "@/lib/connectDb";
+import { dbConnect } from "@/lib/connectDb";
 import User from "@/models/user";
 
 
@@ -12,7 +12,7 @@ export async function GET() {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    await connectDB();
+    await dbConnect();
 
     const user = await User.findOne({ clerkId: userId });
 
@@ -38,7 +38,7 @@ export async function GET() {
       });
     }
   } catch (error) {
-    console.error("Error checking user:", error);
+    console.log("Error checking user:", error);
     return NextResponse.json(
       { error: "Failed to check user" },
       { status: 500 },

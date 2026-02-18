@@ -44,7 +44,7 @@ export default function Dashboard() {
       const jsonData = await res.json();
       setData(jsonData);
     } catch (error) {
-      console.error("Fetch failed:", error);
+      console.log("Fetch failed:", error);
       toast.error("Server Error");
     }
   };
@@ -74,7 +74,7 @@ export default function Dashboard() {
       await fetchData();
       toast.success("Habit updated successfully");
     } catch (error) {
-      console.error("Toggle failed:", error);
+      console.log("Toggle failed:", error);
       toast.error("Failed to update habit");
     }
   };
@@ -104,7 +104,7 @@ export default function Dashboard() {
       await fetchData();
       toast.success("Habit added successfully!");
     } catch (error) {
-      console.error("Add habit failed:", error);
+      console.log("Add habit failed:", error);
       toast.error("Failed to add habit");
     }
   };
@@ -134,7 +134,7 @@ export default function Dashboard() {
       await fetchData();
       toast.success("Monthly goal set successfully!");
     } catch (error) {
-      console.error("Set goal failed:", error);
+      console.log("Set goal failed:", error);
       toast.error("Failed to set goal");
     }
   };
@@ -163,7 +163,7 @@ export default function Dashboard() {
   };
 
   return (
-  <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 space-y-4 sm:space-y-6 pb-20">
+  <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 space-y-4 sm:space-y-6 pb-20 rounded-3xl">
     <DashboardHeader
       month={date.toLocaleString("default", { month: "long" })}
       year={year}

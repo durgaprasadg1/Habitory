@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { connectDB } from "@/lib/connectDb";
+import { dbConnect } from "@/lib/connectDb";
 import Habit from "@/models/habit";
 import HabitLog from "@/models/habitLog";
 import mongoose from "mongoose";
@@ -16,7 +16,7 @@ export async function GET(request, { params }) {
 
     const { habitId } = await params;
 
-    await connectDB();
+    await dbConnect();
 
     const habit = await Habit.findById(habitId);
 
@@ -30,7 +30,7 @@ export async function GET(request, { params }) {
 
     return NextResponse.json(habit);
   } catch (error) {
-    console.error("Error fetching habit:", error);
+    console.log("Error fetching habit:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },
@@ -51,7 +51,7 @@ export async function PUT(request, { params }) {
     const body = await request.json();
     const { name, category, isGoalHabit } = body;
 
-    await connectDB();
+    await dbConnect();
 
     const habit = await Habit.findById(habitId);
 
@@ -75,7 +75,7 @@ export async function PUT(request, { params }) {
       message: "Habit updated successfully",
     });
   } catch (error) {
-    console.error("Error updating habit:", error);
+    console.log("Error updating habit:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },
@@ -99,7 +99,7 @@ export async function DELETE(request, { params }) {
 
     const { habitId } = await params;
 
-    await connectDB();
+    await dbConnect();
 
     const habit = await Habit.findById(habitId);
 
@@ -122,7 +122,7 @@ export async function DELETE(request, { params }) {
       message: "Habit and all associated logs deleted successfully",
     });
   } catch (error) {
-    console.error("Error deleting habit:", error);
+    console.log("Error deleting habit:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

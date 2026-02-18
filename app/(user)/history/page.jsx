@@ -84,7 +84,7 @@ export default function HistoryPage() {
 
   if (availableMonths.length === 0) {
     return (
-      <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 lg:p-8 pb-20">
+      <div className="min-h-screen rounded-3xl bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 lg:p-8 pb-20">
         <div className="max-w-7xl mx-auto">
           <div className="mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-2">
@@ -114,7 +114,7 @@ export default function HistoryPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 lg:p-8 pb-20">
+    <div className="min-h-screen rounded-3xl bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 lg:p-8 pb-20">
       <div className="max-w-7xl mx-auto">
         <div className="mb-6">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-4">

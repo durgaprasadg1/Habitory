@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth, currentUser } from "@clerk/nextjs/server";
-import { connectDB } from "@/lib/connectDb";
+import { dbConnect } from "@/lib/connectDb";
 import Habit from "@/models/habit";
 import Month from "@/models/month";
 import HabitLog from "@/models/habitLog";
@@ -25,7 +25,7 @@ export async function GET(request) {
       searchParams.get("month") || new Date().getMonth() + 1,
     );
 
-    await connectDB();
+    await dbConnect();
 
     let monthDoc = await Month.findOne({
       userId: userId,
@@ -98,7 +98,7 @@ export async function GET(request) {
       },
     });
   } catch (error) {
-    console.error("Error fetching dashboard data:", error);
+    console.log("Error fetching dashboard data:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

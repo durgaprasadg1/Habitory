@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { connectDB } from "@/lib/connectDb";
+import { dbConnect } from "@/lib/connectDb";
 import HabitLog from "@/models/habitLog";
 import mongoose from "mongoose";
 
@@ -22,7 +22,7 @@ export async function POST(request) {
       );
     }
 
-    await connectDB();
+    await dbConnect();
 
     const targetDate = new Date(date);
     targetDate.setHours(0, 0, 0, 0);
@@ -47,7 +47,7 @@ export async function POST(request) {
       return NextResponse.json(newLog, { status: 201 });
     }
   } catch (error) {
-    console.error("Error toggling habit log:", error);
+    console.log("Error toggling habit log:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },

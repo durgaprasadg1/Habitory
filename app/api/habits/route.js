@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs/server";
-import { connectDB } from "@/lib/connectDb";
+import { dbConnect } from "@/lib/connectDb";
 import Habit from "@/models/habit";
 import Month from "@/models/month";
 import HabitLog from "@/models/habitLog";
@@ -20,7 +20,7 @@ export async function GET(request) {
       searchParams.get("month") || new Date().getMonth() + 1,
     );
 
-    await connectDB();
+    await dbConnect();
 
     let monthDoc = await Month.findOne({
       userId: userId,
@@ -62,7 +62,7 @@ export async function GET(request) {
       },
     });
   } catch (error) {
-    console.error("Error fetching habits:", error);
+    console.log("Error fetching habits:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },
@@ -91,7 +91,7 @@ export async function POST(request) {
     const currentYear = year || new Date().getFullYear();
     const currentMonth = month || new Date().getMonth() + 1;
 
-    await connectDB();
+    await dbConnect();
 
     let monthDoc = await Month.findOne({
       userId: userId,
@@ -133,7 +133,7 @@ export async function POST(request) {
 
     return NextResponse.json(habit, { status: 201 });
   } catch (error) {
-    console.error("Error creating habit:", error);
+    console.log("Error creating habit:", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 },
