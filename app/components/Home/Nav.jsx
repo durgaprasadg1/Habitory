@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import Logo from "../Brand/Logo";
 import { LogOut, Home, BarChart3, History } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export default function AuthNavbar() {
   const router = useRouter();
@@ -14,6 +15,7 @@ export default function AuthNavbar() {
   const { signOut } = useClerk();
 
   const handleLogout = async () => {
+    toast.success("Logged out successfully!");
     await signOut({ redirectUrl: "/" });
   };
 
@@ -25,9 +27,7 @@ export default function AuthNavbar() {
 
   return (
     <nav className="w-full border-b border-[#A8A29E]/40 bg-[#F8F5F2]">
-
       <div className="flex items-center justify-between px-4 py-3">
-
         <Logo size={25} />
 
         {!isSignedIn ? (
@@ -48,7 +48,6 @@ export default function AuthNavbar() {
           </div>
         ) : (
           <div className="flex items-center justify-between gap-4">
-
             <div className="flex items-center gap-5">
               {navItems.map((item, i) => {
                 const Icon = item.icon;
@@ -82,10 +81,8 @@ export default function AuthNavbar() {
             >
               <LogOut size={18} />
             </Button>
-
           </div>
         )}
-
       </div>
     </nav>
   );
