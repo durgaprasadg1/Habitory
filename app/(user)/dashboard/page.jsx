@@ -207,6 +207,16 @@ export default function Dashboard() {
       )}
     </div>
 
+      <HabitsTable
+        habits={data.habits}
+        calendarDays={calendarDays}
+        habitLogs={data.habitLogsMap || {}}
+        onToggle={handleToggle}
+        onUpdate={fetchData}
+        year={year}
+        month={month}
+        isReadOnly={isReadOnly}
+      />
     <MonthlyGoalCard goal={data.monthlyGoal} />
 
     <div className="space-y-4">
@@ -219,16 +229,6 @@ export default function Dashboard() {
       <WeeklyProgress weeks={data.weeklyStats || []} />
     </div>
 
-    <HabitsTable
-      habits={data.habits}
-      calendarDays={calendarDays}
-      habitLogs={data.habitLogsMap || {}}
-      onToggle={handleToggle}
-      onUpdate={fetchData}
-      year={year}
-      month={month}
-      isReadOnly={isReadOnly}
-    />
   </div>
 );
 

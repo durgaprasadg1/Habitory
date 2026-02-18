@@ -33,7 +33,7 @@ export default function WeeklyTrendChart({ weeklyStats }) {
                 stroke="#A8A29E"
                 tick={{ fill: "#A8A29E", fontSize: 11 }}
                 label={{
-                  value: "Week",
+                  value: "",
                   position: "insideBottom",
                   offset: -15,
                   fill: "#A8A29E",

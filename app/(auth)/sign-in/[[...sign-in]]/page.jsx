@@ -10,7 +10,7 @@ export default function Page() {
           path="/sign-in"
           routing="path"
           signUpUrl="/sign-up"
-          afterSignInUrl="/dashboard"
+          fallbackRedirectUrl="/dashboard"
           appearance={{
             layout: {
               socialButtonsPlacement: "bottom",
