@@ -37,7 +37,7 @@ export const CircularProgress: React.FC<CircularProgressProps> = ({
             cx={size / 2}
             cy={size / 2}
             r={radius}
-            stroke="#0F766E"
+            stroke="#C08457"
             strokeWidth={strokeWidth}
             fill="none"
             strokeDasharray={circumference}
@@ -52,7 +52,7 @@ export const CircularProgress: React.FC<CircularProgressProps> = ({
       </div>
       {label && (
         <div className="text-center">
-          <div className="text-xs font-medium text-[#0F766E] uppercase">
+          <div className="text-xs font-medium text-[#C08457] uppercase">
             {label}
           </div>
           {sublabel && <div className="text-xs text-[#A8A29E]">{sublabel}</div>}

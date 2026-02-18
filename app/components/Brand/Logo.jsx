@@ -1,4 +1,6 @@
+import { useRouter } from "next/navigation";
 export default function Logo({ size = 40, showText = true }) {
+  const router= useRouter();
   return (
     <div className="flex items-center gap-3">
       <svg
@@ -25,7 +27,7 @@ export default function Logo({ size = 40, showText = true }) {
       </svg>
 
       {showText && (
-        <span className="text-lg font-semibold text-[#1C1917] tracking-wide">
+        <span className="text-lg font-semibold text-[#1C1917] tracking-wide hover:cursor-pointer" onClick={()=> router.push("/")}>
           Habitory
         </span>
       )}

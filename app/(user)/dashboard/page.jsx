@@ -225,13 +225,7 @@ export default function Dashboard() {
           Progress Overview
         </h3>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <SummaryCard
-            percentage={data.overallSummary?.percentage || 0}
-            completed={data.overallSummary?.completed || 0}
-            total={data.overallSummary?.total || 0}
-          />
-
+        <div className="grid grid-cols-2 gap-4">
           {(data.weeklyStats || []).map((week, index) => (
             <Card
               key={index}
@@ -259,6 +253,13 @@ export default function Dashboard() {
             </Card>
           ))}
         </div>
+
+        {/* Monthly Summary */}
+        <SummaryCard
+          percentage={data.overallSummary?.percentage || 0}
+          completed={data.overallSummary?.completed || 0}
+          total={data.overallSummary?.total || 0}
+        />
       </div>
     </div>
   );
