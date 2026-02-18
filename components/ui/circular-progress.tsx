@@ -28,23 +28,22 @@ export const CircularProgress: React.FC<CircularProgressProps> = ({
             cx={size / 2}
             cy={size / 2}
             r={radius}
-            stroke="currentColor"
+            stroke="#E7E5E4"
             strokeWidth={strokeWidth}
             fill="none"
-            className="text-gray-700"
           />
           {/* Progress circle */}
           <circle
             cx={size / 2}
             cy={size / 2}
             r={radius}
-            stroke="currentColor"
+            stroke="#0F766E"
             strokeWidth={strokeWidth}
             fill="none"
             strokeDasharray={circumference}
             strokeDashoffset={offset}
             strokeLinecap="round"
-            className="text-purple-500 transition-all duration-500"
+            className="transition-all duration-500"
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
@@ -53,10 +52,10 @@ export const CircularProgress: React.FC<CircularProgressProps> = ({
       </div>
       {label && (
         <div className="text-center">
-          <div className="text-xs font-medium text-purple-400 uppercase">
+          <div className="text-xs font-medium text-[#0F766E] uppercase">
             {label}
           </div>
-          {sublabel && <div className="text-xs text-gray-400">{sublabel}</div>}
+          {sublabel && <div className="text-xs text-[#A8A29E]">{sublabel}</div>}
         </div>
       )}
     </div>

@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { TrendingUp, TrendingDown, Target, Calendar } from "lucide-react";
+import { TrendingUp,  Target, Check, ChartSpline } from "lucide-react";
 
 export default function OverviewCards({ overview, streaks }) {
   return (
@@ -24,7 +24,8 @@ export default function OverviewCards({ overview, streaks }) {
         <CardContent className="pt-4 sm:pt-6">
           <div className="flex flex-col">
             <div className="flex items-center justify-between mb-2">
-              <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-[#C08457]" />
+              <Check className="w-4 h-4 sm:w-5 sm:h-5 text-[#C08457]"  />
+            
               <span className="text-xl sm:text-3xl font-bold text-[#1C1917]">
                 {overview.percentage}%
               </span>
@@ -40,7 +41,7 @@ export default function OverviewCards({ overview, streaks }) {
         <CardContent className="pt-4 sm:pt-6">
           <div className="flex flex-col">
             <div className="flex items-center justify-between mb-2">
-              <Calendar className="w-4 h-4 sm:w-5 sm:h-5 text-[#C08457]" />
+              <ChartSpline className="w-4 h-4 sm:w-5 sm:h-5 text-[#C08457]" />
               <span className="text-xl sm:text-3xl font-bold text-[#1C1917]">
                 {streaks.current}
               </span>
@@ -56,7 +57,7 @@ export default function OverviewCards({ overview, streaks }) {
         <CardContent className="pt-4 sm:pt-6">
           <div className="flex flex-col">
             <div className="flex items-center justify-between mb-2">
-              <TrendingDown className="w-4 h-4 sm:w-5 sm:h-5 text-[#C08457]" />
+                <TrendingUp className="w-4 h-4 sm:w-5 sm:h-5 text-[#C08457]" />
               <span className="text-xl sm:text-3xl font-bold text-[#1C1917]">
                 {streaks.longest}
               </span>

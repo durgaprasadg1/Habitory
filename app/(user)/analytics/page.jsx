@@ -15,6 +15,7 @@ export default function AnalyticsPage() {
   const { user } = useUser();
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [selectedDate, setSelectedDate] = useState({
     month: new Date().getMonth() + 1,
     year: new Date().getFullYear(),
@@ -22,7 +23,9 @@ export default function AnalyticsPage() {
 
   const fetchAnalytics = async () => {
     try {
-      setLoading(true);
+      if (isInitialLoad) {
+        setLoading(true);
+      }
       const response = await fetch(
         `/api/analytics?month=${selectedDate.month}&year=${selectedDate.year}`,
       );
@@ -36,6 +39,7 @@ export default function AnalyticsPage() {
       console.log("Error fetching analytics:", error);
     } finally {
       setLoading(false);
+      setIsInitialLoad(false);
     }
   };
 
@@ -63,11 +67,21 @@ export default function AnalyticsPage() {
   };
 
   const monthNames = [
-    "January","February","March","April","May","June",
-    "July","August","September","October","November","December",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
-  if (loading) {
+  if (isInitialLoad && loading) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#F8F5F2]">
         <Loader size={48} />
@@ -79,9 +93,7 @@ export default function AnalyticsPage() {
     return (
       <div className="flex items-center justify-center min-h-screen bg-[#F8F5F2] ">
         <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40 p-6">
-          <p className="text-[#A8A29E]">
-            No analytics data available
-          </p>
+          <p className="text-[#A8A29E]">No analytics data available</p>
         </Card>
       </div>
     );

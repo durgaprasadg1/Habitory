@@ -4,9 +4,7 @@ import { CircularProgress } from "@/components/ui/circular-progress";
 export default function WeeklyProgress({ weeks }) {
   return (
     <div className="space-y-3">
-      <h3 className="text-lg font-semibold text-[#1C1917]">
-        Weekly Progress
-      </h3>
+      <h3 className="text-lg font-semibold text-[#1C1917]">Weekly Progress</h3>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
         {weeks.map((week, index) => (
