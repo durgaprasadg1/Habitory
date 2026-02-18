@@ -138,25 +138,6 @@ if (!validation.success) {
 const habit = await createHabit(validation.data);
 ```
 
-For detailed documentation and examples, see [validators/README.md](validators/README.md).
-
-## 📡 API Routes
-
-| Endpoint                | Method      | Description                          |
-| ----------------------- | ----------- | ------------------------------------ |
-| `/api/habits`           | GET, POST   | Fetch all habits or create new habit |
-| `/api/habits/[habitId]` | PUT, DELETE | Update or delete specific habit      |
-| `/api/habits/logs`      | GET, POST   | Fetch or create habit logs           |
-| `/api/dashboard`        | GET         | Get dashboard data                   |
-| `/api/analytics`        | GET         | Get analytics data                   |
-| `/api/history`          | GET         | Get habit history                    |
-| `/api/monthly-goal`     | GET, POST   | Manage monthly goals                 |
-| `/api/user/check`       | GET         | Check user status                    |
-| `/api/sync-user`        | POST        | Sync user data                       |
-| `/api/webhooks/clerk`   | POST        | Handle Clerk webhooks                |
-
-> All endpoints validate input data using Zod schemas before processing.
-
 ## �🗄️ Database Models
 
 ### User
