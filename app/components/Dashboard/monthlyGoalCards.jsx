@@ -13,7 +13,7 @@ export default function MonthlyGoalCard({ goal }) {
       <CardContent>
         {goal ? (
           <>
-            <h3 className="font-semibold text-[#1C1917]">
+            <h3 className="font-semibold text-[#1C1917] underline">
               {goal.title}
             </h3>
             <p className="text-sm text-[#A8A29E]">

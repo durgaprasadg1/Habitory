@@ -5,6 +5,13 @@ import { useUser } from "@clerk/nextjs";
 import Loader from "@/app/components/Home/Loader";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
   History,
   TrendingUp,
   TrendingDown,
@@ -70,8 +77,18 @@ export default function HistoryPage() {
   };
 
   const monthNames = [
-    "January","February","March","April","May","June",
-    "July","August","September","October","November","December",
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
   ];
 
   if (loading && !availableMonths.length) {
@@ -103,7 +120,8 @@ export default function HistoryPage() {
                   No Past Month History Available
                 </h3>
                 <p className="text-[#A8A29E]">
-                  Start tracking your habits and come back next month to see your history!
+                  Start tracking your habits and come back next month to see
+                  your history!
                 </p>
               </div>
             </CardContent>
@@ -128,27 +146,35 @@ export default function HistoryPage() {
               </p>
             </div>
             <div className="w-full sm:w-auto">
-              <select
+              <Select
                 value={
                   selectedMonth
                     ? `${selectedMonth.year}-${selectedMonth.month}`
                     : ""
                 }
-                onChange={(e) => {
-                  const [year, month] = e.target.value.split("-");
+                onValueChange={(value) => {
+                  const [year, month] = value.split("-");
                   setSelectedMonth({
                     year: parseInt(year),
                     month: parseInt(month),
                   });
                 }}
-                className="w-full sm:w-auto bg-white border border-[#A8A29E]/50 text-[#1C1917] rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#C08457]"
               >
-                {availableMonths.map((m, index) => (
-                  <option key={index} value={`${m.year}-${m.month}`}>
-                    {monthNames[m.month - 1]} {m.year}
-                  </option>
-                ))}
-              </select>
+                <SelectTrigger className="w-full sm:w-auto bg-white border-[#A8A29E]/50 text-[#1C1917] focus:ring-1 focus:ring-[#C08457] focus:border-[#C08457]">
+                  <SelectValue placeholder="Select a month" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-[#A8A29E]/50">
+                  {availableMonths.map((m, index) => (
+                    <SelectItem
+                      key={index}
+                      value={`${m.year}-${m.month}`}
+                      className="text-[#1C1917]"
+                    >
+                      {monthNames[m.month - 1]} {m.year}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>
@@ -223,14 +249,36 @@ export default function HistoryPage() {
                         margin={{ top: 5, right: 10, left: -20, bottom: 5 }}
                       >
                         <defs>
-                          <linearGradient id="gradient-history" x1="0" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stopColor="#C08457" stopOpacity={0.4} />
-                            <stop offset="95%" stopColor="#C08457" stopOpacity={0} />
+                          <linearGradient
+                            id="gradient-history"
+                            x1="0"
+                            y1="0"
+                            x2="0"
+                            y2="1"
+                          >
+                            <stop
+                              offset="5%"
+                              stopColor="#C08457"
+                              stopOpacity={0.4}
+                            />
+                            <stop
+                              offset="95%"
+                              stopColor="#C08457"
+                              stopOpacity={0}
+                            />
                           </linearGradient>
                         </defs>
                         <CartesianGrid stroke="#A8A29E" strokeDasharray="3 3" />
-                        <XAxis dataKey="day" stroke="#A8A29E" tick={{ fill: "#A8A29E", fontSize: 10 }} />
-                        <YAxis stroke="#A8A29E" tick={{ fill: "#A8A29E", fontSize: 10 }} domain={[0, 100]} />
+                        <XAxis
+                          dataKey="day"
+                          stroke="#A8A29E"
+                          tick={{ fill: "#A8A29E", fontSize: 10 }}
+                        />
+                        <YAxis
+                          stroke="#A8A29E"
+                          tick={{ fill: "#A8A29E", fontSize: 10 }}
+                          domain={[0, 100]}
+                        />
                         <Tooltip
                           contentStyle={{
                             backgroundColor: "#E7E5E4",
@@ -240,7 +288,8 @@ export default function HistoryPage() {
                           }}
                           labelStyle={{ color: "#1C1917" }}
                           formatter={(value, name) => {
-                            if (name === "percentage") return [`${value}%`, "Completion"];
+                            if (name === "percentage")
+                              return [`${value}%`, "Completion"];
                             return [value, name];
                           }}
                         />

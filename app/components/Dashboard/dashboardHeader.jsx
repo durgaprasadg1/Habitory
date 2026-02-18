@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 export default function DashboardHeader({ month, year, onPrev, onNext }) {
   return (
     <div className="flex items-center justify-between">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center  ">
         <Button
           variant="ghost"
           size="icon"
@@ -16,11 +16,9 @@ export default function DashboardHeader({ month, year, onPrev, onNext }) {
 
         <div className="text-center min-w-40">
           <h2 className="text-xl font-bold text-[#C08457]">
-            {month}
+            {month} {"  "}{year}
           </h2>
-          <p className="text-sm text-[#A8A29E]">
-            {year}
-          </p>
+         
         </div>
 
         <Button

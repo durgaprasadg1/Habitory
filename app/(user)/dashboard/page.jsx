@@ -5,12 +5,13 @@ import DashboardHeader from "../../components/Dashboard/dashboardHeader";
 import MonthlyGoalCard from "../../components/Dashboard/monthlyGoalCards";
 import HabitsTable from "../../components/Dashboard/habitsTable";
 import SummaryCard from "../../components/Dashboard/summaryCard";
-import WeeklyProgress from "../../components/Dashboard/weeklyProgress";
 import { AddHabitDialog } from "../../components/Dashboard/AddHabitDialog";
 import { SetMonthlyGoalDialog } from "../../components/Dashboard/SetMonthlyGoalDialog";
 import { generateCalendarDays } from "@/lib/dashboard/calculations";
 import { toast } from "sonner";
 import { AlertTriangle } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { CircularProgress } from "@/components/ui/circular-progress";
 
 export default function Dashboard() {
   const [data, setData] = useState(null);
@@ -163,49 +164,49 @@ export default function Dashboard() {
   };
 
   return (
-  <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 space-y-4 sm:space-y-6 pb-20 rounded-3xl">
-    <DashboardHeader
-      month={date.toLocaleString("default", { month: "long" })}
-      year={year}
-      onPrev={handlePrevMonth}
-      onNext={() => setDate(new Date(year, month + 1))}
-    />
+    <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 space-y-4 sm:space-y-6 pb-20 rounded-3xl">
+      <DashboardHeader
+        month={date.toLocaleString("default", { month: "long" })}
+        year={year}
+        onPrev={handlePrevMonth}
+        onNext={() => setDate(new Date(year, month + 1))}
+      />
 
-    {isReadOnly && (
-      <div className="bg-[#DC2626]/10 border border-[#DC2626]/40 rounded-lg p-3 sm:p-4 flex items-start gap-3">
-        <AlertTriangle className="w-5 h-5 text-[#DC2626] shrink-0 mt-0.5" />
-        <div>
-          <h3 className="font-semibold text-[#DC2626] text-sm sm:text-base">
-            Viewing Past Month (Read-Only)
-          </h3>
-          <p className="text-[#A8A29E] text-xs sm:text-sm mt-1">
-            This month has ended. You cannot edit or add habits for past
-            months. Check the History page for detailed past month analytics.
-          </p>
-        </div>
-      </div>
-    )}
-
-    <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-between items-start sm:items-center">
-      <h2 className="text-xl sm:text-2xl font-bold text-[#1C1917]">
-        Your Habits
-      </h2>
-
-      {!isReadOnly && (
-        <div className="flex gap-2 w-full sm:w-auto">
-          <div className="flex-1 sm:flex-initial">
-            <SetMonthlyGoalDialog
-              currentGoal={data.monthlyGoal}
-              habits={data.habits}
-              onSetGoal={handleSetGoal}
-            />
-          </div>
-          <div className="flex-1 sm:flex-initial">
-            <AddHabitDialog onAddHabit={handleAddHabit} />
+      {isReadOnly && (
+        <div className="bg-[#DC2626]/10 border border-[#DC2626]/40 rounded-lg p-3 sm:p-4 flex items-start gap-3">
+          <AlertTriangle className="w-5 h-5 text-[#DC2626] shrink-0 mt-0.5" />
+          <div>
+            <h3 className="font-semibold text-[#DC2626] text-sm sm:text-base">
+              Viewing Past Month (Read-Only)
+            </h3>
+            <p className="text-[#A8A29E] text-xs sm:text-sm mt-1">
+              This month has ended. You cannot edit or add habits for past
+              months. Check the History page for detailed past month analytics.
+            </p>
           </div>
         </div>
       )}
-    </div>
+
+      <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-between items-start sm:items-center">
+        <h2 className="text-xl sm:text-2xl font-bold text-[#1C1917]">
+          Your Habits
+        </h2>
+
+        {!isReadOnly && (
+          <div className="flex gap-2 w-full sm:w-auto">
+            <div className="flex-1 sm:flex-initial">
+              <SetMonthlyGoalDialog
+                currentGoal={data.monthlyGoal}
+                habits={data.habits}
+                onSetGoal={handleSetGoal}
+              />
+            </div>
+            <div className="flex-1 sm:flex-initial">
+              <AddHabitDialog onAddHabit={handleAddHabit} />
+            </div>
+          </div>
+        )}
+      </div>
 
       <HabitsTable
         habits={data.habits}
@@ -217,19 +218,49 @@ export default function Dashboard() {
         month={month}
         isReadOnly={isReadOnly}
       />
-    <MonthlyGoalCard goal={data.monthlyGoal} />
+      <MonthlyGoalCard goal={data.monthlyGoal} />
 
-    <div className="space-y-4">
-      <SummaryCard
-        percentage={data.overallSummary?.percentage || 0}
-        completed={data.overallSummary?.completed || 0}
-        total={data.overallSummary?.total || 0}
-      />
+      <div className="space-y-3">
+        <h3 className="text-lg font-semibold text-[#1C1917]">
+          Progress Overview
+        </h3>
 
-      <WeeklyProgress weeks={data.weeklyStats || []} />
+        <div className="grid grid-cols-2 gap-4">
+          {(data.weeklyStats || []).map((week, index) => (
+            <Card
+              key={index}
+              className="bg-[#E7E5E4] border border-[#A8A29E]/40 hover:shadow-sm transition-shadow"
+            >
+              <CardHeader className="pb-3">
+                <CardTitle className="text-sm font-medium text-[#A8A29E]">
+                  {week.label}
+                </CardTitle>
+              </CardHeader>
+
+              <CardContent className="flex flex-col items-center space-y-3">
+                <CircularProgress
+                  percentage={week.percentage || 0}
+                  size={90}
+                  strokeWidth={8}
+                  label={`${week.percentage || 0}%`}
+                  sublabel={week.days}
+                />
+
+                <p className="text-xs text-[#A8A29E]">
+                  {week.completed || 0} / {week.total || 0} completed
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+
+        {/* Monthly Summary */}
+        <SummaryCard
+          percentage={data.overallSummary?.percentage || 0}
+          completed={data.overallSummary?.completed || 0}
+          total={data.overallSummary?.total || 0}
+        />
+      </div>
     </div>
-
-  </div>
-);
-
+  );
 }

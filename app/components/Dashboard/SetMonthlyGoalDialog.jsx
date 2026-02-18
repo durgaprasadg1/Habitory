@@ -10,6 +10,13 @@ import {
   DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Target } from "lucide-react";
 
@@ -17,13 +24,13 @@ export const SetMonthlyGoalDialog = ({ currentGoal, habits, onSetGoal }) => {
   const [open, setOpen] = useState(false);
   const [goalTitle, setGoalTitle] = useState("");
   const [goalDescription, setGoalDescription] = useState("");
-  const [goalHabitId, setGoalHabitId] = useState("");
+  const [goalHabitId, setGoalHabitId] = useState("none");
 
   useEffect(() => {
     if (currentGoal) {
       setGoalTitle(currentGoal.title || "");
       setGoalDescription(currentGoal.description || "");
-      setGoalHabitId(currentGoal.habitId || "");
+      setGoalHabitId(currentGoal.habitId || "none");
     }
   }, [currentGoal]);
 
@@ -33,7 +40,8 @@ export const SetMonthlyGoalDialog = ({ currentGoal, habits, onSetGoal }) => {
       onSetGoal({
         goalTitle,
         goalDescription,
-        goalHabitId: goalHabitId || undefined,
+        goalHabitId:
+          goalHabitId && goalHabitId !== "none" ? goalHabitId : undefined,
       });
       setOpen(false);
     }
@@ -53,18 +61,20 @@ export const SetMonthlyGoalDialog = ({ currentGoal, habits, onSetGoal }) => {
 
       <DialogContent className="sm:max-w-md bg-[#E7E5E4] border border-[#A8A29E]/40 text-[#1C1917]">
         <DialogHeader>
-          <DialogTitle className="text-[#1C1917]">
-            Set Monthly Goal
-          </DialogTitle>
+          <DialogTitle className="text-[#1C1917]">Set Monthly Goal</DialogTitle>
           <DialogDescription className="text-[#A8A29E]">
-            Define your goal for this month. You can link it to one of your habits.
+            Define your goal for this month. You can link it to one of your
+            habits.
           </DialogDescription>
         </DialogHeader>
 
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
-              <label htmlFor="goalTitle" className="text-sm font-medium text-[#1C1917]">
+              <label
+                htmlFor="goalTitle"
+                className="text-sm font-medium text-[#1C1917]"
+              >
                 Goal Title *
               </label>
               <input
@@ -78,7 +88,10 @@ export const SetMonthlyGoalDialog = ({ currentGoal, habits, onSetGoal }) => {
             </div>
 
             <div className="grid gap-2">
-              <label htmlFor="goalDescription" className="text-sm font-medium text-[#1C1917]">
+              <label
+                htmlFor="goalDescription"
+                className="text-sm font-medium text-[#1C1917]"
+              >
                 Description
               </label>
               <textarea
@@ -91,22 +104,31 @@ export const SetMonthlyGoalDialog = ({ currentGoal, habits, onSetGoal }) => {
             </div>
 
             <div className="grid gap-2">
-              <label htmlFor="goalHabit" className="text-sm font-medium text-[#1C1917]">
+              <label
+                htmlFor="goalHabit"
+                className="text-sm font-medium text-[#1C1917]"
+              >
                 Link to Habit (Optional)
               </label>
-              <select
-                id="goalHabit"
-                value={goalHabitId}
-                onChange={(e) => setGoalHabitId(e.target.value)}
-                className="h-10 w-full rounded-md border border-[#A8A29E]/50 bg-white px-3 py-2 text-sm text-[#1C1917] focus:ring-1 focus:ring-[#C08457] focus:border-[#C08457]"
-              >
-                <option value="">None</option>
-                {habits.map((habit) => (
-                  <option key={habit._id} value={habit._id}>
-                    {habit.name}
-                  </option>
-                ))}
-              </select>
+              <Select value={goalHabitId} onValueChange={setGoalHabitId}>
+                <SelectTrigger className="h-10 w-full border-[#A8A29E]/50 bg-white text-[#1C1917] focus:ring-1 focus:ring-[#C08457] focus:border-[#C08457]">
+                  <SelectValue placeholder="Select a habit" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border-[#A8A29E]/50">
+                  <SelectItem value="none" className="text-[#1C1917]">
+                    None
+                  </SelectItem>
+                  {habits.map((habit) => (
+                    <SelectItem
+                      key={habit._id}
+                      value={habit._id}
+                      className="text-[#1C1917]"
+                    >
+                      {habit.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
