@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useAuth, useClerk } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
 import Logo from "../Brand/Logo";
-import { LogOut, Home, BarChart3, History } from "lucide-react";
+import { LogOut, Home, BarChart3, History, User } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 
@@ -23,6 +23,7 @@ export default function AuthNavbar() {
     { href: "/dashboard", icon: Home },
     { href: "/analytics", icon: BarChart3 },
     { href: "/history", icon: History },
+    {href : '/profile', icon: User}
   ];
 
   return (
@@ -73,7 +74,6 @@ export default function AuthNavbar() {
                 );
               })}
             </div>
-
             <Button
               onClick={handleLogout}
               size="icon"

@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 
-// Clear cache to prevent type casting issues
 if (mongoose.models.User) {
   delete mongoose.models.User;
 }

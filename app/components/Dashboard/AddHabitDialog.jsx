@@ -90,7 +90,7 @@ export const AddHabitDialog = ({ onAddHabit }) => {
               <label htmlFor="category" className="text-sm font-medium text-[#1C1917]">
                 Category
               </label>
-              <Select value={category} onValueChange={setCategory}>
+              <Select value={category} onValueChange={setCategory} requiredccdcdcd>
                 <SelectTrigger className="w-full bg-white border border-[#A8A29E]/50 text-[#1C1917] focus:ring-1 focus:ring-[#C08457]">
                   <SelectValue placeholder="Select a category" />
                 </SelectTrigger>

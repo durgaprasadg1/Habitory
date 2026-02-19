@@ -26,7 +26,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        variables: { colorPrimary: "#C08457" },
+      }}
+      dynamic
+    >
       <html lang="en" className="h-full">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gradient-to-br from-[#0B0F2A] via-[#11183C] to-[#0E1433] text-white`}

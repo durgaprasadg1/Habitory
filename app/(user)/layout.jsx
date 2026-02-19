@@ -1,7 +1,6 @@
 import LoginToast from "../components/User/LoginToast";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-
 export default async function UserLayout({ children }) {
   const { userId } = await auth();
 

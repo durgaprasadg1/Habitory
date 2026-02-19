@@ -150,8 +150,6 @@ function calculateAnalytics(habits, habitLogs, year, month, daysInMonth) {
     daysInMonth,
   );
 
- 
-
   const longestStreak = calculateLongestStreak(habitLogs, habits, daysInMonth);
   const currentStreak = calculateCurrentStreak(habitLogs, habits, daysInMonth);
 
@@ -167,7 +165,7 @@ function calculateAnalytics(habits, habitLogs, year, month, daysInMonth) {
     categoryStats,
     dailyTrend,
     weeklyStats,
-   
+
     streaks: {
       longest: longestStreak,
       current: currentStreak,
@@ -208,7 +206,10 @@ function calculateWeeklyTrend(habitLogs, habits, year, month, daysInMonth) {
 }
 
 function calculateLongestStreak(habitLogs, habits, daysInMonth) {
+  if (habits.length === 0) return 0;
+
   let maxStreak = 0;
+  let currentStreak = 0;
 
   for (let day = 1; day <= daysInMonth; day++) {
     const dayLogs = habitLogs.filter((log) => {
@@ -216,20 +217,11 @@ function calculateLongestStreak(habitLogs, habits, daysInMonth) {
       return logDay === day && log.completed;
     });
 
-    if (dayLogs.length === habits.length && habits.length > 0) {
-      let streak = 1;
-      for (let nextDay = day + 1; nextDay <= daysInMonth; nextDay++) {
-        const nextDayLogs = habitLogs.filter((log) => {
-          const logDay = new Date(log.date).getDate();
-          return logDay === nextDay && log.completed;
-        });
-        if (nextDayLogs.length === habits.length) {
-          streak++;
-        } else {
-          break;
-        }
-      }
-      maxStreak = Math.max(maxStreak, streak);
+    if (dayLogs.length > 0) {
+      currentStreak++;
+      maxStreak = Math.max(maxStreak, currentStreak);
+    } else {
+      currentStreak = 0;
     }
   }
 
@@ -245,16 +237,20 @@ function calculateCurrentStreak(habitLogs, habits, daysInMonth) {
   const currentMonth = today.getMonth() + 1;
   const currentYear = today.getFullYear();
 
-  for (let day = Math.min(currentDay, daysInMonth); day >= 1; day--) {
+  const startDay = Math.min(currentDay, daysInMonth);
+
+  for (let day = startDay; day >= 1; day--) {
     const dayLogs = habitLogs.filter((log) => {
       const logDay = new Date(log.date).getDate();
       return logDay === day && log.completed;
     });
 
-    if (dayLogs.length === habits.length) {
+    if (dayLogs.length > 0) {
       streak++;
     } else {
-      break;
+      if (day !== startDay || day !== currentDay) {
+        break;
+      }
     }
   }
 

@@ -42,7 +42,7 @@ export default function HabitsTable({
             <CardHeader className="">
               <div className="flex items-center justify-between">
                 <div className="flex-1">
-                  <h3 className="font-semibold text-[#1C1917] text-sm">
+                  <h3 className="font-semibold text-[#1C1917] text-sm mt-2">
                     {habit.name}
                   </h3>
                   {habit.category && (

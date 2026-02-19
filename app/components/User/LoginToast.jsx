@@ -12,7 +12,7 @@ export default function LoginToast() {
     if (isLoaded && user && !hasShownToast.current) {
       hasShownToast.current = true;
       toast.success(
-        `Welcome back, ${user.firstName || user.username || "User"}! 🎉`,
+        `Welcome , ${user.firstName || user.username || "User"}! 🎉`,
       );
     }
   }, [isLoaded, user]);
