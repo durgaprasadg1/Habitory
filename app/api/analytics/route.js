@@ -88,7 +88,6 @@ function calculateAnalytics(habits, habitLogs, year, month, daysInMonth) {
       percentage,
     };
   });
-
   const categoryMap = {};
   habits.forEach((habit) => {
     const category = habit.category || "Uncategorized";
