@@ -12,10 +12,12 @@ import { toast } from "sonner";
 import { AlertTriangle } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { CircularProgress } from "@/components/ui/circular-progress";
+import Loader from "../../components/Home/Loader";
 
 export default function Dashboard() {
   const [data, setData] = useState(null);
   const [date, setDate] = useState(new Date());
+  const [loading, setLoading] = useState(true);
 
   const year = date.getFullYear();
   const month = date.getMonth();
@@ -33,20 +35,21 @@ export default function Dashboard() {
   const isReadOnly = isPastMonth();
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const res = await fetch(`/api/dashboard?year=${year}&month=${month + 1}`);
 
       if (!res.ok) {
         toast.error("Something Went Wrong");
-        console.log("Error in fetching habits:", res.status);
         return;
       }
 
       const jsonData = await res.json();
       setData(jsonData);
     } catch (error) {
-      console.log("Fetch failed:", error);
       toast.error("Server Error");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -74,8 +77,7 @@ export default function Dashboard() {
 
       await fetchData();
       toast.success("Habit updated successfully");
-    } catch (error) {
-      console.log("Toggle failed:", error);
+    } catch {
       toast.error("Failed to update habit");
     }
   };
@@ -104,8 +106,7 @@ export default function Dashboard() {
 
       await fetchData();
       toast.success("Habit added successfully!");
-    } catch (error) {
-      console.log("Add habit failed:", error);
+    } catch {
       toast.error("Failed to add habit");
     }
   };
@@ -134,11 +135,18 @@ export default function Dashboard() {
 
       await fetchData();
       toast.success("Monthly goal set successfully!");
-    } catch (error) {
-      console.log("Set goal failed:", error);
+    } catch {
       toast.error("Failed to set goal");
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[#F8F5F2]">
+        <Loader />
+      </div>
+    );
+  }
 
   if (!data) return null;
 
@@ -156,15 +164,17 @@ export default function Dashboard() {
         newDate.getMonth() < currentMonth)
     ) {
       toast.error(
-        "Cannot navigate to past months. View history for past data.",
+        "Cannot navigate to past months. View history for past data."
       );
       return;
     }
+
     setDate(newDate);
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 space-y-4 sm:space-y-6 pb-20 rounded-3xl">
+    <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 space-y-6 pb-20 rounded-3xl">
+
       <DashboardHeader
         month={date.toLocaleString("default", { month: "long" })}
         year={year}
@@ -173,37 +183,30 @@ export default function Dashboard() {
       />
 
       {isReadOnly && (
-        <div className="bg-[#DC2626]/10 border border-[#DC2626]/40 rounded-lg p-3 sm:p-4 flex items-start gap-3">
+        <div className="bg-[#DC2626]/10 border border-[#DC2626]/40 rounded-lg p-4 flex items-start gap-3">
           <AlertTriangle className="w-5 h-5 text-[#DC2626] shrink-0 mt-0.5" />
           <div>
-            <h3 className="font-semibold text-[#DC2626] text-sm sm:text-base">
+            <h3 className="font-semibold text-[#DC2626]">
               Viewing Past Month (Read-Only)
             </h3>
-            <p className="text-[#A8A29E] text-xs sm:text-sm mt-1">
-              This month has ended. You cannot edit or add habits for past
-              months. Check the History page for detailed past month analytics.
+            <p className="text-[#A8A29E] text-sm mt-1">
+              This month has ended. You cannot edit or add habits for past months.
             </p>
           </div>
         </div>
       )}
 
-      <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:justify-between items-start sm:items-center">
-        <h2 className="text-xl sm:text-2xl font-bold text-[#1C1917]">
-          Your Habits
-        </h2>
+      <div className="flex flex-col sm:flex-row sm:justify-between gap-3">
+        <h2 className="text-2xl font-bold">Your Habits</h2>
 
         {!isReadOnly && (
-          <div className="flex gap-2 w-full sm:w-auto">
-            <div className="flex-1 sm:flex-initial">
-              <SetMonthlyGoalDialog
-                currentGoal={data.monthlyGoal}
-                habits={data.habits}
-                onSetGoal={handleSetGoal}
-              />
-            </div>
-            <div className="flex-1 sm:flex-initial">
-              <AddHabitDialog onAddHabit={handleAddHabit} />
-            </div>
+          <div className="flex gap-2">
+            <SetMonthlyGoalDialog
+              currentGoal={data.monthlyGoal}
+              habits={data.habits}
+              onSetGoal={handleSetGoal}
+            />
+            <AddHabitDialog onAddHabit={handleAddHabit} />
           </div>
         )}
       </div>
@@ -218,21 +221,17 @@ export default function Dashboard() {
         month={month}
         isReadOnly={isReadOnly}
       />
+
       <MonthlyGoalCard goal={data.monthlyGoal} />
 
-      <div className="space-y-3">
-        <h3 className="text-lg font-semibold text-[#1C1917]">
-          Progress Overview
-        </h3>
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold">Progress Overview</h3>
 
         <div className="grid grid-cols-2 gap-4">
           {(data.weeklyStats || []).map((week, index) => (
-            <Card
-              key={index}
-              className="bg-[#E7E5E4] border border-[#A8A29E]/40 hover:shadow-sm transition-shadow"
-            >
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-[#A8A29E]">
+            <Card key={index} className="bg-[#E7E5E4] border border-[#A8A29E]/40">
+              <CardHeader>
+                <CardTitle className="text-sm text-[#A8A29E]">
                   {week.label}
                 </CardTitle>
               </CardHeader>
@@ -245,7 +244,6 @@ export default function Dashboard() {
                   label={`${week.percentage || 0}%`}
                   sublabel={week.days}
                 />
-
                 <p className="text-xs text-[#A8A29E]">
                   {week.completed || 0} / {week.total || 0} completed
                 </p>
@@ -254,13 +252,13 @@ export default function Dashboard() {
           ))}
         </div>
 
-        {/* Monthly Summary */}
         <SummaryCard
           percentage={data.overallSummary?.percentage || 0}
           completed={data.overallSummary?.completed || 0}
           total={data.overallSummary?.total || 0}
         />
       </div>
+
     </div>
   );
 }
