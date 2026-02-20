@@ -1,3 +1,4 @@
+"use client"
 import { useRouter } from "next/navigation";
 export default function Logo({ size = 40, showText = true }) {
   const router= useRouter();

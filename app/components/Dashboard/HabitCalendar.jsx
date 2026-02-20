@@ -1,4 +1,5 @@
-import { Check } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
+import { useState } from "react";
 
 export default function HabitCalendar({
   habit,
@@ -9,6 +10,17 @@ export default function HabitCalendar({
   month,
   isReadOnly = false,
 }) {
+  const [loadingDay, setLoadingDay] = useState(null);
+
+  const handleToggle = async (habitId, date, day) => {
+    setLoadingDay(day);
+    try {
+      await onToggle(habitId, date);
+    } finally {
+      setLoadingDay(null);
+    }
+  };
+
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const weeks = [];
@@ -24,7 +36,6 @@ export default function HabitCalendar({
 
   return (
     <div className="w-full">
-      {/* Days of week header */}
       <div className="grid grid-cols-7 gap-1.5 mb-2">
         {daysOfWeek.map((dayName) => (
           <div
@@ -36,7 +47,6 @@ export default function HabitCalendar({
         ))}
       </div>
 
-      {/* Calendar grid with weeks */}
       <div className="space-y-1.5">
         {weeks.map((week, weekIndex) => (
           <div key={weekIndex} className="grid grid-cols-7 gap-1.5">
@@ -46,20 +56,22 @@ export default function HabitCalendar({
                   <button
                     onClick={() =>
                       !isReadOnly &&
-                      onToggle(habit._id, new Date(year, month, day))
+                      handleToggle(habit._id, new Date(year, month, day), day)
                     }
-                    disabled={isReadOnly}
+                    disabled={isReadOnly || loadingDay === day}
                     className={`w-9 h-9 rounded-full border-2 flex items-center justify-center transition-all duration-200 text-xs font-medium ${
                       habitLogs[`${habit._id}-${day}`]
                         ? "bg-[#C08457] border-[#C08457] text-white"
                         : "border-[#A8A29E]/60 text-[#1C1917] hover:border-[#C08457] hover:scale-105"
                     } ${
-                      isReadOnly
+                      isReadOnly || loadingDay === day
                         ? "cursor-not-allowed opacity-60"
                         : "cursor-pointer"
                     }`}
                   >
-                    {habitLogs[`${habit._id}-${day}`] ? (
+                    {loadingDay === day ? (
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                    ) : habitLogs[`${habit._id}-${day}`] ? (
                       <Check className="w-4 h-4" />
                     ) : (
                       day

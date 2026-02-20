@@ -75,7 +75,25 @@ export default function Dashboard() {
         return;
       }
 
-      await fetchData();
+      const result = await res.json();
+
+      setData((prevData) => {
+        const day = date.getDate();
+        const logKey = `${habitId}-${day}`;
+        const newHabitLogsMap = { ...prevData.habitLogsMap };
+
+        if (result.completed === false) {
+          delete newHabitLogsMap[logKey];
+        } else {
+          newHabitLogsMap[logKey] = true;
+        }
+
+        return {
+          ...prevData,
+          habitLogsMap: newHabitLogsMap,
+        };
+      });
+
       toast.success("Habit updated successfully");
     } catch {
       toast.error("Failed to update habit");
@@ -164,7 +182,7 @@ export default function Dashboard() {
         newDate.getMonth() < currentMonth)
     ) {
       toast.error(
-        "Cannot navigate to past months. View history for past data."
+        "Cannot navigate to past months. View history for past data.",
       );
       return;
     }
@@ -174,7 +192,6 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 space-y-6 pb-20 rounded-3xl">
-
       <DashboardHeader
         month={date.toLocaleString("default", { month: "long" })}
         year={year}
@@ -190,7 +207,8 @@ export default function Dashboard() {
               Viewing Past Month (Read-Only)
             </h3>
             <p className="text-[#A8A29E] text-sm mt-1">
-              This month has ended. You cannot edit or add habits for past months.
+              This month has ended. You cannot edit or add habits for past
+              months.
             </p>
           </div>
         </div>
@@ -229,7 +247,10 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-2 gap-4">
           {(data.weeklyStats || []).map((week, index) => (
-            <Card key={index} className="bg-[#E7E5E4] border border-[#A8A29E]/40">
+            <Card
+              key={index}
+              className="bg-[#E7E5E4] border border-[#A8A29E]/40"
+            >
               <CardHeader>
                 <CardTitle className="text-sm text-[#A8A29E]">
                   {week.label}
@@ -258,7 +279,6 @@ export default function Dashboard() {
           total={data.overallSummary?.total || 0}
         />
       </div>
-
     </div>
   );
 }
