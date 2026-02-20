@@ -1,8 +1,8 @@
-# 📊 Habit Tracker
+# Habit Tracker
 
 A modern, full-stack habit tracking application built with Next.js 14+ that helps users build and maintain positive habits through comprehensive tracking, analytics, and goal setting.
 
-## ✨ Features
+## Features
 
 - **User Authentication**: Secure authentication powered by Clerk
 - **Habit Management**: Create, edit, and track daily habits
@@ -16,7 +16,7 @@ A modern, full-stack habit tracking application built with Next.js 14+ that help
 - **Progress Tracking**: Weekly and daily progress visualization
 - **Responsive Design**: Seamless experience across all devices
 
-## 🚀 Tech Stack
+## Tech Stack
 
 - **Framework**: [Next.js 14+](https://nextjs.org/) (App Router)
 - **Language**: JavaScript/TypeScript
@@ -27,7 +27,7 @@ A modern, full-stack habit tracking application built with Next.js 14+ that help
 - **UI Components**: Custom components with shadcn/ui
 - **Charts**: Interactive data visualizations
 
-## 🛠️ Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -86,7 +86,7 @@ A modern, full-stack habit tracking application built with Next.js 14+ that help
 
    Navigate to [http://localhost:3000](http://localhost:3000)
 
-## � Project Structure
+## Project Structure
 
 ```
 habit-tracker/
@@ -114,14 +114,14 @@ habit-tracker/
 └── public/              # Static assets
 ```
 
-## 🛡️ Data Validation
+##  Data Validation
 
 All API endpoints use **Zod** for comprehensive data validation. This ensures:
 
-- ✅ Type safety across the application
-- ✅ Consistent error messages
-- ✅ Input sanitization and transformation
-- ✅ Protection against invalid data
+- Type safety across the application
+- Consistent error messages
+- Input sanitization and transformation
+- Protection against invalid data
 
 ### Using Validators
 
@@ -138,7 +138,7 @@ if (!validation.success) {
 const habit = await createHabit(validation.data);
 ```
 
-## �🗄️ Database Models
+##  Database Models
 
 ### User
 
@@ -163,7 +163,7 @@ const habit = await createHabit(validation.data);
 - Progress calculations
 - Historical data
 
-## 🎨 Components
+##  Components
 
 ### Dashboard Components
 
@@ -183,7 +183,7 @@ const habit = await createHabit(validation.data);
 - **OverviewCards**: Key metrics
 - **WeeklyTrendChart**: Weekly patterns
 
-## 🚢 Deployment
+## Deployment
 
 ### Deploy on Vercel
 
@@ -196,11 +196,11 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out the [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more options.
 
-## 📝 License
+## License
 
 This project is open source and available under the [MIT License](LICENSE).
 
-## 🤝 Contributing
+## Contributing
 
 Contributions, issues, and feature requests are welcome! Feel free to check the issues page.
 
