@@ -94,6 +94,14 @@ export default function Dashboard() {
         };
       });
 
+      const refreshRes = await fetch(
+        `/api/dashboard?year=${year}&month=${month + 1}`,
+      );
+      if (refreshRes.ok) {
+        const refreshedData = await refreshRes.json();
+        setData(refreshedData);
+      }
+
       toast.success("Habit updated successfully");
     } catch {
       toast.error("Failed to update habit");
