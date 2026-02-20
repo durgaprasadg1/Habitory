@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import Footer from "./components/Home/Footer"
 
 export default function HomePage() {
   const router = useRouter();
@@ -75,7 +74,7 @@ export default function HomePage() {
           </p>
         </div>
       </section>
-   <Footer/>
+   
       
     </main>
   );
