@@ -12,10 +12,10 @@ export default function HabitCalendar({
 }) {
   const [loadingDay, setLoadingDay] = useState(null);
 
-  const handleToggle = async (habitId, date, day) => {
+  const handleToggle = async (habitId, year, month, day) => {
     setLoadingDay(day);
     try {
-      await onToggle(habitId, date);
+      await onToggle(habitId, year, month, day);
     } finally {
       setLoadingDay(null);
     }
@@ -55,8 +55,7 @@ export default function HabitCalendar({
                 {day ? (
                   <button
                     onClick={() =>
-                      !isReadOnly &&
-                      handleToggle(habit._id, new Date(year, month, day), day)
+                      !isReadOnly && handleToggle(habit._id, year, month, day)
                     }
                     disabled={isReadOnly || loadingDay === day}
                     className={`w-9 h-9 rounded-full border-2 flex items-center justify-center transition-all duration-200 text-xs font-medium ${

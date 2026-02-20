@@ -35,6 +35,7 @@ const CATEGORIES = [
 
 export const EditHabitDialog = ({ habit, onUpdate, onDelete }) => {
   const [open, setOpen] = useState(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [name, setName] = useState(habit.name);
   const [category, setCategory] = useState(habit.category || "");
   const [isGoalHabit, setIsGoalHabit] = useState(habit.isGoalHabit || false);
@@ -61,10 +62,6 @@ export const EditHabitDialog = ({ habit, onUpdate, onDelete }) => {
   };
 
   const handleDelete = async () => {
-    const confirmDelete = window.confirm(
-      "Are you sure? This will delete all tracking data for this habit."
-    );
-    if (!confirmDelete) return;
     setIsDeleting(true);
     try {
       const res = await fetch(`/api/habits/${habit._id}`, {
@@ -75,6 +72,7 @@ export const EditHabitDialog = ({ habit, onUpdate, onDelete }) => {
         return;
       }
       toast.success("Habit deleted successfully!");
+      setDeleteDialogOpen(false);
       setOpen(false);
       onDelete();
     } catch {
@@ -97,9 +95,7 @@ export const EditHabitDialog = ({ habit, onUpdate, onDelete }) => {
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="sm:max-w-md bg-[#E7E5E4] border border-[#A8A29E]/40 text-[#1C1917]">
           <DialogHeader>
-            <DialogTitle className="text-[#1C1917]">
-              Edit Habit
-            </DialogTitle>
+            <DialogTitle className="text-[#1C1917]">Edit Habit</DialogTitle>
             <DialogDescription className="text-[#A8A29E]">
               Update your habit details or delete it permanently.
             </DialogDescription>
@@ -108,7 +104,10 @@ export const EditHabitDialog = ({ habit, onUpdate, onDelete }) => {
           <form onSubmit={handleUpdate}>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <label htmlFor="edit-name" className="text-sm font-medium text-[#1C1917]">
+                <label
+                  htmlFor="edit-name"
+                  className="text-sm font-medium text-[#1C1917]"
+                >
                   Habit Name *
                 </label>
                 <input
@@ -121,7 +120,10 @@ export const EditHabitDialog = ({ habit, onUpdate, onDelete }) => {
               </div>
 
               <div className="grid gap-2">
-                <label htmlFor="edit-category" className="text-sm font-medium text-[#1C1917]">
+                <label
+                  htmlFor="edit-category"
+                  className="text-sm font-medium text-[#1C1917]"
+                >
                   Category
                 </label>
                 <Select value={category} onValueChange={setCategory}>
@@ -158,12 +160,12 @@ export const EditHabitDialog = ({ habit, onUpdate, onDelete }) => {
             <DialogFooter className="gap-2">
               <Button
                 type="button"
-                onClick={handleDelete}
+                onClick={() => setDeleteDialogOpen(true)}
                 disabled={isDeleting}
                 className="bg-[#DC2626] hover:opacity-90 text-white"
               >
                 <Trash2 className="w-4 h-4 mr-2" />
-                {isDeleting ? "Deleting..." : "Delete"}
+                Delete
               </Button>
 
               <div className="flex-1" />
@@ -185,6 +187,41 @@ export const EditHabitDialog = ({ habit, onUpdate, onDelete }) => {
               </Button>
             </DialogFooter>
           </form>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+        <DialogContent className="sm:max-w-md bg-[#E7E5E4] border border-[#A8A29E]/40 text-[#1C1917]">
+          <DialogHeader>
+            <DialogTitle className="text-[#DC2626]">Delete Habit</DialogTitle>
+            <DialogDescription className="text-[#A8A29E]">
+              Are you sure you want to delete this habit? This will permanently
+              delete all tracking data for "{habit.name}". This action cannot be
+              undone.
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter className="gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setDeleteDialogOpen(false)}
+              disabled={isDeleting}
+              className="border-[#A8A29E]/50 text-[#1C1917]"
+            >
+              Cancel
+            </Button>
+
+            <Button
+              type="button"
+              onClick={handleDelete}
+              disabled={isDeleting}
+              className="bg-[#DC2626] hover:opacity-90 text-white"
+            >
+              <Trash2 className="w-4 h-4 mr-2" />
+              {isDeleting ? "Deleting..." : "Delete Habit"}
+            </Button>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </>

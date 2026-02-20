@@ -24,8 +24,19 @@ export async function POST(request) {
 
     await dbConnect();
 
-    const targetDate = new Date(date);
-    targetDate.setHours(0, 0, 0, 0);
+    // Parse date string (YYYY-MM-DD format) and create UTC date
+    const [yearStr, monthStr, dayStr] = date.split("-");
+    const targetDate = new Date(
+      Date.UTC(
+        parseInt(yearStr),
+        parseInt(monthStr) - 1,
+        parseInt(dayStr),
+        0,
+        0,
+        0,
+        0,
+      ),
+    );
 
     const existingLog = await HabitLog.findOne({
       userId: userId,

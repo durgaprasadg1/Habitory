@@ -57,17 +57,20 @@ export default function Dashboard() {
     fetchData();
   }, [date]);
 
-  const handleToggle = async (habitId, date) => {
+  const handleToggle = async (habitId, year, month, day) => {
     if (isReadOnly) {
       toast.error("Cannot edit past month data");
       return;
     }
 
+    // Create date string in YYYY-MM-DD format to avoid timezone issues
+    const dateString = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+
     try {
       const res = await fetch("/api/habits/logs", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ habitId, date: date.toISOString() }),
+        body: JSON.stringify({ habitId, date: dateString }),
       });
 
       if (!res.ok) {
@@ -78,7 +81,6 @@ export default function Dashboard() {
       const result = await res.json();
 
       setData((prevData) => {
-        const day = date.getDate();
         const logKey = `${habitId}-${day}`;
         const newHabitLogsMap = { ...prevData.habitLogsMap };
 
