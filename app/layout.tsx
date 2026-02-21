@@ -16,9 +16,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Habit Tracker",
-  description: "Track discipline. Build consistency.",
+export const metadata: Metadata = { 
+  title: "Habitory",
+  description: "Track habits, build discipline.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
