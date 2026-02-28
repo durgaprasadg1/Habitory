@@ -8,6 +8,7 @@ import HabitsTable from "../../components/Dashboard/habitsTable";
 import SummaryCard from "../../components/Dashboard/summaryCard";
 import { AddHabitDialog } from "../../components/Dashboard/AddHabitDialog";
 import { SetMonthlyGoalDialog } from "../../components/Dashboard/SetMonthlyGoalDialog";
+import { CopyHabitsDialog } from "../../components/Dashboard/CopyHabitsDialog";
 import { generateCalendarDays } from "@/lib/dashboard/calculations";
 import { toast } from "sonner";
 import { AlertTriangle } from "lucide-react";
@@ -22,6 +23,7 @@ export default function Dashboard() {
   const [date, setDate] = useState(new Date());
   const [loading, setLoading] = useState(true);
   const [showDialog, setShowDialog] = useState(false);
+  const [showCopyHabitsDialog, setShowCopyHabitsDialog] = useState(false);
   const [dialogLoading, setDialogLoading] = useState(null);
 
   const year = date.getFullYear();
@@ -52,6 +54,24 @@ export default function Dashboard() {
     }
 
     checkHasSeen();
+  }, []);
+
+  useEffect(() => {
+    async function checkCopyHabits() {
+      try {
+        const res = await fetch("/api/user/check-copy-habits");
+        if (res.ok) {
+          const data = await res.json();
+          if (data.shouldShow) {
+            setShowCopyHabitsDialog(true);
+          }
+        }
+      } catch (error) {
+        console.error("Failed to check copy habits:", error);
+      }
+    }
+
+    checkCopyHabits();
   }, []);
 
   const fetchData = async () => {
@@ -380,6 +400,12 @@ export default function Dashboard() {
           total={data.overallSummary?.total || 0}
         />
       </div>
+
+      <CopyHabitsDialog
+        open={showCopyHabitsDialog}
+        onOpenChange={setShowCopyHabitsDialog}
+        onCopyComplete={fetchData}
+      />
     </div>
   );
 }

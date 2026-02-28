@@ -3,6 +3,11 @@
 import { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import Loader from "@/app/components/Home/Loader";
+import OverviewCards from "@/app/components/Analytics/OverviewCards";
+import HabitsChart from "@/app/components/Analytics/HabitsChart";
+import CategoryChart from "@/app/components/Analytics/CategoryChart";
+import DailyTrendChart from "@/app/components/Analytics/DailyTrendChart";
+import WeeklyTrendChart from "@/app/components/Analytics/WeeklyTrendChart";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Select,
@@ -11,22 +16,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  History,
-  TrendingUp,
-  TrendingDown,
-  Calendar,
-  Target,
-} from "lucide-react";
-import {
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  ResponsiveContainer,
-  Area,
-  AreaChart,
-} from "recharts";
+import { History, Calendar, Target } from "lucide-react";
+import { toast } from "sonner";
 
 export default function HistoryPage() {
   const { user } = useUser();
@@ -43,6 +34,11 @@ export default function HistoryPage() {
 
   useEffect(() => {
     if (selectedMonth) {
+      console.log(
+        "Selected month , selected Year:",
+        selectedMonth.year,
+        selectedMonth.month,
+      );
       fetchMonthHistory(selectedMonth.year, selectedMonth.month);
     }
   }, [selectedMonth]);
@@ -56,8 +52,17 @@ export default function HistoryPage() {
         setAvailableMonths(data.availableMonths || []);
         if (data.availableMonths && data.availableMonths.length > 0) {
           setSelectedMonth(data.availableMonths[0]);
+        } else {
+          toast.info(
+            "No history data available yet. Start tracking habits to see your history!",
+          );
         }
+      } else {
+        toast.error("Failed to load history data");
       }
+    } catch (error) {
+      console.error("Error fetching months:", error);
+      toast.error("Error loading history");
     } finally {
       setLoading(false);
     }
@@ -69,8 +74,27 @@ export default function HistoryPage() {
       const response = await fetch(`/api/history?year=${year}&month=${month}`);
       if (response.ok) {
         const data = await response.json();
-        setMonthData(data.monthData);
+        console.log("data:", data.monthData);
+        if (data.monthData) {
+          setMonthData(data.monthData);
+        } else {
+          setMonthData(null);
+          toast.info("No data available for this month");
+        }
+      } else if (response.status === 404) {
+        setMonthData(null);
+        toast.error("No data found for this month");
+      } else if (response.status === 403) {
+        setMonthData(null);
+        toast.error("Cannot access data before account creation");
+      } else {
+        setMonthData(null);
+        toast.error("Failed to load month data");
       }
+    } catch (error) {
+      console.error("Error fetching month history:", error);
+      setMonthData(null);
+      toast.error("Error loading month data");
     } finally {
       setLoading(false);
     }
@@ -185,149 +209,67 @@ export default function HistoryPage() {
           </div>
         ) : monthData ? (
           <div className="space-y-6">
-            <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40">
-              <CardHeader>
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
-                  <CardTitle className="text-lg sm:text-xl text-[#1C1917] flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-[#C08457]" />
-                    {monthNames[monthData.month - 1]} {monthData.year}
+            {/* Monthly Goal Card */}
+            {monthData.monthlyGoal && (
+              <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40">
+                <CardHeader>
+                  <CardTitle className="text-base sm:text-lg text-[#1C1917] flex items-center gap-2">
+                    <Target className="w-5 h-5 text-[#C08457]" />
+                    Monthly Goal
                   </CardTitle>
-                  <div className="flex gap-3 sm:gap-4">
-                    <div className="text-center">
-                      <div className="text-2xl sm:text-3xl font-bold text-[#1C1917]">
-                        {monthData.percentage}%
-                      </div>
-                      <div className="text-xs text-[#A8A29E]">Completion</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl sm:text-3xl font-bold text-[#C08457]">
-                        {monthData.totalHabits}
-                      </div>
-                      <div className="text-xs text-[#A8A29E]">Habits</div>
-                    </div>
-                    <div className="text-center">
-                      <div className="text-2xl sm:text-3xl font-bold text-[#C08457]">
-                        {monthData.percentage >= 50 ? (
-                          <TrendingUp className="w-6 h-6 sm:w-7 sm:h-7" />
-                        ) : (
-                          <TrendingDown className="w-6 h-6 sm:w-7 sm:h-7" />
-                        )}
-                      </div>
-                      <div className="text-xs text-[#A8A29E]">Trend</div>
-                    </div>
-                  </div>
-                </div>
-              </CardHeader>
-
-              <CardContent>
-                {monthData.monthlyGoal && (
-                  <div className="mb-4 p-3 bg-[#F8F5F2] rounded-lg border border-[#A8A29E]/40">
-                    <div className="flex items-start gap-2">
-                      <Target className="w-4 h-4 text-[#C08457] mt-0.5 shrink-0" />
-                      <div>
-                        <h4 className="font-semibold text-sm text-[#1C1917]">
-                          {monthData.monthlyGoal.title}
-                        </h4>
-                        {monthData.monthlyGoal.description && (
-                          <p className="text-xs text-[#A8A29E] mt-1">
-                            {monthData.monthlyGoal.description}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                <div className="mt-4">
-                  <h4 className="text-sm font-medium text-[#A8A29E] mb-3">
-                    Daily Productivity Trend
+                </CardHeader>
+                <CardContent>
+                  <h4 className="font-semibold text-sm text-[#1C1917]">
+                    {monthData.monthlyGoal.title}
                   </h4>
-                  <div className="h-48 sm:h-64">
-                    <ResponsiveContainer width="100%" height="100%">
-                      <AreaChart
-                        data={monthData.dailyData}
-                        margin={{ top: 5, right: 10, left: -20, bottom: 5 }}
-                      >
-                        <defs>
-                          <linearGradient
-                            id="gradient-history"
-                            x1="0"
-                            y1="0"
-                            x2="0"
-                            y2="1"
-                          >
-                            <stop
-                              offset="5%"
-                              stopColor="#C08457"
-                              stopOpacity={0.4}
-                            />
-                            <stop
-                              offset="95%"
-                              stopColor="#C08457"
-                              stopOpacity={0}
-                            />
-                          </linearGradient>
-                        </defs>
-                        <CartesianGrid stroke="#A8A29E" strokeDasharray="3 3" />
-                        <XAxis
-                          dataKey="day"
-                          stroke="#A8A29E"
-                          tick={{ fill: "#A8A29E", fontSize: 10 }}
-                        />
-                        <YAxis
-                          stroke="#A8A29E"
-                          tick={{ fill: "#A8A29E", fontSize: 10 }}
-                          domain={[0, 100]}
-                        />
-                        <Tooltip
-                          contentStyle={{
-                            backgroundColor: "#E7E5E4",
-                            border: "1px solid #A8A29E",
-                            borderRadius: "8px",
-                            fontSize: "12px",
-                          }}
-                          labelStyle={{ color: "#1C1917" }}
-                          formatter={(value, name) => {
-                            if (name === "percentage")
-                              return [`${value}%`, "Completion"];
-                            return [value, name];
-                          }}
-                        />
-                        <Area
-                          type="monotone"
-                          dataKey="percentage"
-                          stroke="#C08457"
-                          fillOpacity={1}
-                          fill="url(#gradient-history)"
-                          strokeWidth={2}
-                        />
-                      </AreaChart>
-                    </ResponsiveContainer>
+                  {monthData.monthlyGoal.description && (
+                    <p className="text-xs text-[#A8A29E] mt-1">
+                      {monthData.monthlyGoal.description}
+                    </p>
+                  )}
+                </CardContent>
+              </Card>
+            )}
+
+            {monthData.message && monthData.totalHabits === 0 ? (
+              <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40">
+                <CardContent className="py-12">
+                  <div className="text-center">
+                    <Calendar className="w-16 h-16 text-[#A8A29E] mx-auto mb-4 opacity-50" />
+                    <p className="text-[#A8A29E] text-lg">
+                      {monthData.message}
+                    </p>
                   </div>
+                </CardContent>
+              </Card>
+            ) : (
+              <>
+                <OverviewCards
+                  overview={{
+                    totalHabits: monthData.totalHabits,
+                    totalPossible: monthData.totalPossible,
+                    completed: monthData.completed,
+                    percentage: monthData.percentage,
+                    daysInMonth: monthData.daysInMonth,
+                  }}
+                  streaks={monthData.streaks || { longest: 0, current: 0 }}
+                />
+
+                {/* Daily Trend Chart */}
+                <DailyTrendChart dailyTrend={monthData.dailyData || []} />
+
+                {/* Habit Performance and Category Charts */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <HabitsChart habitStats={monthData.habitStats || []} />
+                  <CategoryChart
+                    categoryStats={monthData.categoryStats || []}
+                  />
                 </div>
 
-                <div className="mt-4 grid grid-cols-2 sm:grid-cols-3 gap-3">
-                  <div className="bg-[#F8F5F2] rounded-lg p-3 border border-[#A8A29E]/40">
-                    <div className="text-xs text-[#A8A29E]">Completed</div>
-                    <div className="text-lg sm:text-xl font-bold text-[#C08457]">
-                      {monthData.completed}
-                    </div>
-                  </div>
-                  <div className="bg-[#F8F5F2] rounded-lg p-3 border border-[#A8A29E]/40">
-                    <div className="text-xs text-[#A8A29E]">Total Possible</div>
-                    <div className="text-lg sm:text-xl font-bold text-[#1C1917]">
-                      {monthData.totalPossible}
-                    </div>
-                  </div>
-                  <div className="bg-[#F8F5F2] rounded-lg p-3 border border-[#A8A29E]/40 col-span-2 sm:col-span-1">
-                    <div className="text-xs text-[#A8A29E]">Days in Month</div>
-                    <div className="text-lg sm:text-xl font-bold text-[#C08457]">
-                      {monthData.daysInMonth}
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+                {/* Weekly Breakdown */}
+                <WeeklyTrendChart weeklyStats={monthData.weeklyStats || []} />
+              </>
+            )}
           </div>
         ) : null}
       </div>

@@ -1,7 +1,7 @@
 export default function ProfileHeader({ user }) {
   return (
     <>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center ">
         <div>
           <h1 className="text-lg font-semibold text-[#1C1917]">
             {user?.firstName
