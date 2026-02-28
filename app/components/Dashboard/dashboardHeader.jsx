@@ -1,5 +1,6 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import ShineButton from "../../../components/ui/shine-button";
 
 export default function DashboardHeader({ month, year, onPrev, onNext }) {
   return (
@@ -29,6 +30,12 @@ export default function DashboardHeader({ month, year, onPrev, onNext }) {
         >
           <ChevronRight className="w-4 h-4" />
         </Button>
+      </div>
+      <div>
+       <ShineButton >
+        <Sparkles size={16} />
+        AI Summary
+      </ShineButton>
       </div>
     </div>
   );

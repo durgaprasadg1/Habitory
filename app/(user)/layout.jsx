@@ -3,6 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 export default async function UserLayout({ children }) {
   const { userId } = await auth();
+  // console.log("SessionStatus :", sessionStatus);
   if (!userId) {
     redirect("/sign-in");
   }

@@ -28,6 +28,7 @@ export async function GET() {
           profileImage: user.profileImage,
           createdAt: user.createdAt,
           updatedAt: user.updatedAt,
+          
         },
       });
     } else {

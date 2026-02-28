@@ -5,14 +5,15 @@ import { useRouter } from "next/navigation";
 
 export default function HomePage() {
   const router = useRouter();
-
-  const handleGetStart = () => {
-    router.push("/dashboard");
-  };
+  
+    const handleGetStart = () => {
+      router.push("/dashboard");
+    };
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#F8F5F2] text-[#1C1917]">
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#C08457]/20 blur-[140px] rounded-full" />
+
       <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-[#A8A29E]/20 blur-[140px] rounded-full" />
 
       <section className="relative z-10 px-5 pt-16 pb-20 flex flex-col items-center text-center gap-6">

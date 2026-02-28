@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema(
     profileImage: { type: String },
     password: { type: String },
     habits: [{ type: mongoose.Schema.Types.ObjectId, ref: "Habit" }],
+    hasSeenDialog: { type: Boolean, default: false, }
   },
   { timestamps: true },
 );
