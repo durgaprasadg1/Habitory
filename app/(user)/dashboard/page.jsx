@@ -11,7 +11,7 @@ import { SetMonthlyGoalDialog } from "../../components/Dashboard/SetMonthlyGoalD
 import { generateCalendarDays } from "@/lib/dashboard/calculations";
 import { toast } from "sonner";
 import { AlertTriangle } from "lucide-react";
-import {Button} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { CircularProgress } from "@/components/ui/circular-progress";
 import Loader from "../../components/Home/Loader";
@@ -22,7 +22,7 @@ export default function Dashboard() {
   const [date, setDate] = useState(new Date());
   const [loading, setLoading] = useState(true);
   const [showDialog, setShowDialog] = useState(false);
-  const [dontShowLoading, setDontShowLoading] = useState(false);
+  const [dialogLoading, setDialogLoading] = useState(null);
 
   const year = date.getFullYear();
   const month = date.getMonth();
@@ -39,18 +39,18 @@ export default function Dashboard() {
 
   const isReadOnly = isPastMonth();
 
-    useEffect(() => {
-      async function checkHasSeen() {
+  useEffect(() => {
+    async function checkHasSeen() {
       const res = await fetch("/api/user/check-has-seen", {
         method: "GET",
       });
-       const data = await res.json();
-  
+      const data = await res.json();
+
       if (!data.hasSeenDialog) {
         setShowDialog(true);
       }
     }
-  
+
     checkHasSeen();
   }, []);
 
@@ -219,8 +219,10 @@ export default function Dashboard() {
     setDate(newDate);
   };
 
-  const handleCloseThisDialogPermnently = async() =>{
+  const handleCloseThisDialogPermnently = async () => {
     try {
+      setDialogLoading("dontshow");
+
       const res = await fetch("/api/user/check-has-seen", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -230,61 +232,66 @@ export default function Dashboard() {
         toast.error("Failed to close dialog permanently");
         return;
       }
+
       setShowDialog(false);
-      toast.success("Dialog closed permanently!");
-    } catch (error) {
+      toast.success("Will not show this dialog again");
+    } catch {
       toast.error("Failed to close dialog permanently");
-    }  
-    finally{
-      setDontShowLoading(false)
+    } finally {
+      setDialogLoading(null);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 space-y-6 pb-20 rounded-3xl">
-
       {showDialog && (
-              <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
-                <div className="bg-white rounded-lg p-6 w-full max-w-sm text-center">
-                  <h3 className="text-lg font-semibold text-[#1C1917]">Welcome to Habit Tracker!</h3>
-                  <p className="mt-2 text-sm text-[#A8A29E]">
-                    Start building your habits today with our simple and effective tracking system.
-                  </p>
-                  <Button
-                    className="mt-4 w-full bg-[#C08457] hover:opacity-90 rounded-xl text-white py-2 text-sm"
-                    onClick={() => {
-                      setShowDialog(false);
-                      setDontShowLoading(true);
-                      router.push("/how-to-use");
-                    }}
-                  >
-                    {dontShowLoading ?"Loading" : "See how to use it"}
-                  </Button>
-                  <Button
-                    className="mt-4 w-full bg-[#C08457] hover:opacity-90 rounded-xl text-white py-2 text-sm"
-                    onClick={() => {
-                      handleCloseThisDialogPermnently();
-                      setDontShowLoading(true);
-                    }
-                      
-                      
-                    }
-                  >
-                    {dontShowLoading ? "Loading...": "Don't show this again" }
-                  </Button>
-                  <Button
-                    className="mt-4 w-full bg-[#C08457] hover:opacity-90 rounded-xl text-white py-2 text-sm"
-                    onClick={() =>{ 
-                      setShowDialog(false);
-                      setDontShowLoading(true);
-                    }}
-                  >
-                    {dontShowLoading ?  "Loading..." : " Close for now" }
-                   
-                  </Button>
-                </div>
-              </div>
-            )}
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-sm text-center">
+            <h3 className="text-lg font-semibold text-[#1C1917]">
+              Welcome to Habit Tracker!
+            </h3>
+
+            <p className="mt-2 text-sm text-[#A8A29E]">
+              Start building your habits today with our simple and effective
+              tracking system.
+            </p>
+
+            <Button
+              disabled={dialogLoading !== null}
+              className="mt-4 w-full bg-[#C08457] hover:opacity-90 rounded-xl text-white py-2 text-sm"
+              onClick={() => {
+                setDialogLoading("see");
+                setShowDialog(false);
+                router.push("/how-to-use");
+              }}
+            >
+              {dialogLoading === "see" ? "Loading..." : "See how to use it"}
+            </Button>
+
+            <Button
+              disabled={dialogLoading !== null}
+              className="mt-4 w-full bg-[#C08457] hover:opacity-90 rounded-xl text-white py-2 text-sm"
+              onClick={handleCloseThisDialogPermnently}
+            >
+              {dialogLoading === "dontshow"
+                ? "Loading..."
+                : "Don't show this again"}
+            </Button>
+
+            <Button
+              disabled={dialogLoading !== null}
+              className="mt-4 w-full bg-[#C08457] hover:opacity-90 rounded-xl text-white py-2 text-sm"
+              onClick={() => {
+                setDialogLoading("close");
+                setShowDialog(false);
+                setTimeout(() => setDialogLoading(null), 300);
+              }}
+            >
+              {dialogLoading === "close" ? "Loading..." : "Close for now"}
+            </Button>
+          </div>
+        </div>
+      )}
 
       <DashboardHeader
         month={date.toLocaleString("default", { month: "long" })}
