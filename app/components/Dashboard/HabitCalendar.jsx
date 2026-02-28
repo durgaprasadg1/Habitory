@@ -21,6 +21,23 @@ export default function HabitCalendar({
     }
   };
 
+  const isCurrentDay = (day) => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+    const currentDay = currentDate.getDate();
+
+    return year === currentYear && month === currentMonth && day === currentDay;
+  };
+
+  const isCurrentMonth = () => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth();
+
+    return year === currentYear && month === currentMonth;
+  };
+
   const daysOfWeek = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
   const weeks = [];
@@ -50,37 +67,47 @@ export default function HabitCalendar({
       <div className="space-y-1.5">
         {weeks.map((week, weekIndex) => (
           <div key={weekIndex} className="grid grid-cols-7 gap-1.5">
-            {week.map((day, dayIndex) => (
-              <div key={dayIndex} className="flex items-center justify-center">
-                {day ? (
-                  <button
-                    onClick={() =>
-                      !isReadOnly && handleToggle(habit._id, year, month, day)
-                    }
-                    disabled={isReadOnly || loadingDay === day}
-                    className={`w-9 h-9 rounded-full border-2 flex items-center justify-center transition-all duration-200 text-xs font-medium ${
-                      habitLogs[`${habit._id}-${day}`]
-                        ? "bg-[#C08457] border-[#C08457] text-white"
-                        : "border-[#A8A29E]/60 text-[#1C1917] hover:border-[#C08457] hover:scale-105"
-                    } ${
-                      isReadOnly || loadingDay === day
-                        ? "cursor-not-allowed opacity-60"
-                        : "cursor-pointer"
-                    }`}
-                  >
-                    {loadingDay === day ? (
-                      <Loader2 className="w-4 h-4 animate-spin" />
-                    ) : habitLogs[`${habit._id}-${day}`] ? (
-                      <Check className="w-4 h-4" />
-                    ) : (
-                      day
-                    )}
-                  </button>
-                ) : (
-                  <div className="w-9 h-9" />
-                )}
-              </div>
-            ))}
+            {week.map((day, dayIndex) => {
+              const isDayClickable =
+                isCurrentMonth() && isCurrentDay(day) && !isReadOnly;
+              const isDayDisabled = !isDayClickable;
+
+              return (
+                <div
+                  key={dayIndex}
+                  className="flex items-center justify-center"
+                >
+                  {day ? (
+                    <button
+                      onClick={() =>
+                        isDayClickable &&
+                        handleToggle(habit._id, year, month, day)
+                      }
+                      disabled={isDayDisabled || loadingDay === day}
+                      className={`w-9 h-9 rounded-full border-2 flex items-center justify-center transition-all duration-200 text-xs font-medium ${
+                        habitLogs[`${habit._id}-${day}`]
+                          ? "bg-[#C08457] border-[#C08457] text-white"
+                          : "border-[#A8A29E]/60 text-[#1C1917]"
+                      } ${
+                        isDayClickable
+                          ? "cursor-pointer hover:border-[#C08457] hover:scale-105"
+                          : "cursor-not-allowed opacity-60"
+                      }`}
+                    >
+                      {loadingDay === day ? (
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                      ) : habitLogs[`${habit._id}-${day}`] ? (
+                        <Check className="w-4 h-4" />
+                      ) : (
+                        day
+                      )}
+                    </button>
+                  ) : (
+                    <div className="w-9 h-9" />
+                  )}
+                </div>
+              );
+            })}
           </div>
         ))}
       </div>

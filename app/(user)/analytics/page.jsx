@@ -50,20 +50,16 @@ export default function AnalyticsPage() {
   }, [user, selectedDate]);
 
   const handleMonthChange = (increment) => {
-    setSelectedDate((prev) => {
-      let newMonth = prev.month + increment;
-      let newYear = prev.year;
+    // Only allow going to current month - disallow navigation
+    return;
+  };
 
-      if (newMonth > 12) {
-        newMonth = 1;
-        newYear += 1;
-      } else if (newMonth < 1) {
-        newMonth = 12;
-        newYear -= 1;
-      }
-
-      return { month: newMonth, year: newYear };
-    });
+  const isCurrentMonth = () => {
+    const currentDate = new Date();
+    return (
+      selectedDate.month === currentDate.getMonth() + 1 &&
+      selectedDate.year === currentDate.getFullYear()
+    );
   };
 
   const monthNames = [
@@ -114,26 +110,12 @@ export default function AnalyticsPage() {
           </div>
 
           <div className="flex items-center gap-2 bg-[#E7E5E4] rounded-lg p-2 border border-[#A8A29E]/40">
-            <button
-              onClick={() => handleMonthChange(-1)}
-              className="px-3 py-1 hover:bg-[#A8A29E]/20 rounded transition-colors"
-            >
-              ←
-            </button>
-
             <div className="flex items-center gap-2 px-3">
               <Calendar className="w-4 h-4 text-[#C08457]" />
               <span className="font-medium text-sm sm:text-base">
                 {monthNames[selectedDate.month - 1]} {selectedDate.year}
               </span>
             </div>
-
-            <button
-              onClick={() => handleMonthChange(1)}
-              className="px-3 py-1 hover:bg-[#A8A29E]/20 rounded transition-colors"
-            >
-              →
-            </button>
           </div>
         </div>
       </div>

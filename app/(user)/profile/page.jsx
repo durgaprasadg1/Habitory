@@ -4,12 +4,14 @@ import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import Loader from "../../components/Home/Loader";
 import ProfileLayout from "../../components/Profile/ProfileLayout";
+import Image from "next/image";
 
 export default function ProfilePage() {
   const { user, isLoaded } = useUser();
   const [profileData, setProfileData] = useState(null);
   const [statsLoading, setStatsLoading] = useState(true);
-
+  const img  = user?.imageUrl
+  console.log("User in ProfilePage:", );
   const fetchUserProfile = async () => {
     setStatsLoading(true);
     try {
@@ -37,10 +39,15 @@ export default function ProfilePage() {
   if (!user) return null;
 
   return (
+    <>
+   
     <ProfileLayout
       user={user}
       stats={profileData?.stats}
       loading={statsLoading}
+      img = {img}
     />
-  );
+  
+   </>
+   );
 }
