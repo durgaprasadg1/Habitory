@@ -5,16 +5,16 @@ import Habit from "@/models/habit";
 import Month from "@/models/month";
 import HabitLog from "@/models/habitLog";
 import { syncUser } from "@/lib/syncUser";
-import mongoose from "mongoose";
 
 export async function GET(request) {
   try {
+      const clerkUser = await currentUser();
+
     const { userId } = await auth();
     if (!userId) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const clerkUser = await currentUser();
     if (clerkUser) {
       await syncUser(clerkUser);
     }

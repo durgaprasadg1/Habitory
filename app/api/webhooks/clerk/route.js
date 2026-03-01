@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { dbConnect } from "@/lib/connectDb";
 import User from "@/models/user";
+import { sendSignupEmail } from "../../../../services/mailServices";
 
 export async function POST(req) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
@@ -86,15 +87,19 @@ async function handleUserCreated(data) {
   const existingUser = await User.findOne({ clerkId: id });
 
   if (!existingUser) {
+    const email = email_addresses?.[0]?.email_address;
+    const name = `${first_name || ""} ${last_name || ""}`.trim() || "User";
+
     const newUser = await User.create({
       clerkId: id,
-      email: email_addresses[0]?.email_address || "",
-      name: `${first_name || ""} ${last_name || ""}`.trim() || "User",
+      email,
+      name,
       profileImage: image_url || "",
     });
-    console.log("New user created in MongoDB:", newUser.email);
-  } else {
-    console.log("User already exists in MongoDB:", existingUser.email);
+
+    console.log("New user created:", newUser.email);
+
+    
   }
 }
 
@@ -125,3 +130,19 @@ async function handleUserDeleted(data) {
     console.log("User not found in MongoDB for deletion:", id);
   }
 }
+
+
+const sendSignupEmailtouser = async (user) => {
+    try {
+      const response = await fetch("/api/send-signup-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });   
+      const data = await response.json();
+     console.log("email sent")
+    } catch (error) {
+      console.error("Error syncing user:", error);
+    } 
+};
