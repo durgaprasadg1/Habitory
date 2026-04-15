@@ -47,8 +47,9 @@ function PricingCard({ plan }) {
         toast.success("Payment successful. Subscription activated.");
       },
 
+      // Use project accent color instead of hard black so popup matches theme
       theme: {
-        color: "#000000",
+        color: "#C08457",
       },
     };
 
@@ -56,48 +57,49 @@ function PricingCard({ plan }) {
     razor.open();
   };
 
-  return (<>
-   <Script
+  return (
+    <>
+      <Script
         src="https://checkout.razorpay.com/v1/checkout.js"
         strategy="lazyOnload"
       />
-    <Card
-      className={`relative hover:shadow-xl transition-all duration-300 ${
-        plan.recommended ? "border-2 border-black" : ""
-      }`}
-    >
+      <Card
+        className={`relative hover:shadow-xl transition-all duration-300 ${
+          plan.recommended ? "border-2 border-[#C08457]" : ""
+        }`}
+      >
+        {plan.recommended && (
+          <span className="absolute top-3 right-3 text-xs bg-[#C08457] text-white px-2 py-1 rounded">
+            Most Popular
+          </span>
+        )}
 
-      {plan.recommended && (
-        <span className="absolute top-3 right-3 text-xs bg-black text-white px-2 py-1 rounded">
-          Most Popular
-        </span>
-      )}
+        <CardHeader>
+          <CardTitle className="text-xl">{plan.name}</CardTitle>
+          <p className="text-3xl font-bold mt-2">₹{plan.price} / Month</p>
+        </CardHeader>
 
-      <CardHeader>
-        <CardTitle className="text-xl">{plan.name}</CardTitle>
-        <p className="text-3xl font-bold mt-2">₹{plan.price} / Month</p>
-      </CardHeader>
+        <CardContent className="space-y-4">
+          <p className="font-medium">{plan.tips}</p>
 
-      <CardContent className="space-y-4">
-        <p className="font-medium">{plan.tips}</p>
+          <div className="space-y-2">
+            {plan.features.map((feature, index) => (
+              <div key={index} className="flex items-center gap-2 text-sm">
+                <Check size={16} className="text-[#C08457]" />
+                {feature}
+              </div>
+            ))}
+          </div>
 
-        <div className="space-y-2">
-          {plan.features.map((feature, index) => (
-            <div key={index} className="flex items-center gap-2 text-sm">
-              <Check size={16} />
-              {feature}
-            </div>
-          ))}
-        </div>
-
-        <Button
-          className="w-full mt-4"
-          onClick={() => handlePayment(plan.key, plan.name)}
-        >
-          Subscribe to {plan.name}
-        </Button>
-      </CardContent>
-    </Card>
-  </>);
+          <Button
+            className="w-full mt-4 bg-[#C08457] hover:opacity-90 text-white"
+            onClick={() => handlePayment(plan.key, plan.name)}
+          >
+            Subscribe to {plan.name}
+          </Button>
+        </CardContent>
+      </Card>
+    </>
+  );
 }
 export default PricingCard;

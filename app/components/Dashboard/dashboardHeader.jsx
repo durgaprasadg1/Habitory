@@ -115,7 +115,7 @@ export default function DashboardHeader({
           variant="ghost"
           size="icon"
           onClick={onPrev}
-          className="text-[#1C1917] hover:bg-[#E7E5E4]"
+          className="text-[#1C1917] dark:text-white hover:bg-[#E7E5E4]"
         >
           <ChevronLeft className="w-4 h-4" />
         </Button>
@@ -131,13 +131,13 @@ export default function DashboardHeader({
           variant="ghost"
           size="icon"
           onClick={onNext}
-          className="text-[#1C1917] hover:bg-[#E7E5E4]"
+          className="text-[#1C1917] dark:text-white hover:bg-[#E7E5E4]"
         >
           <ChevronRight className="w-4 h-4" />
         </Button>
       </div>
 
-      {/* <div>
+      <div>
         <Dialog>
           <DialogTrigger asChild>
             <ShineButton>
@@ -161,7 +161,7 @@ export default function DashboardHeader({
             {!isSubscribed && (
               <>
                 <DialogHeader className="space-y-3">
-                  <DialogTitle className="text-xl font-semibold text-[#1C1917]">
+                  <DialogTitle className="text-xl font-semibold text-[#1C1917] dark:text-white">
                     Upgrade to Premium ✨
                   </DialogTitle>
 
@@ -171,7 +171,7 @@ export default function DashboardHeader({
                   </DialogDescription>
                 </DialogHeader>
 
-                <div className="bg-[#E7E5E4] rounded-xl p-4 mt-4 text-sm text-[#1C1917] space-y-2">
+                <div className="bg-[#E7E5E4] rounded-xl p-4 mt-4 text-sm text-[#1C1917] dark:text-white space-y-2">
                   <p>AI Monthly Summary</p>
                   <p>Personalized Suggestions</p>
                   <p>Advanced Progress Analytics</p>
@@ -181,7 +181,7 @@ export default function DashboardHeader({
                   <DialogClose asChild>
                     <Button
                       variant="outline"
-                      className="border-[#C08457]/40 text-[#1C1917] hover:bg-[#E7E5E4]"
+                      className="border-[#C08457]/40 text-[#1C1917] dark:text-white hover:bg-[#E7E5E4]"
                     >
                       Cancel
                     </Button>
@@ -201,7 +201,7 @@ export default function DashboardHeader({
             {isSubscribed && (
               <>
                 <DialogHeader className="space-y-2">
-                  <DialogTitle className="text-xl font-semibold text-[#1C1917]">
+                  <DialogTitle className="text-xl font-semibold text-[#1C1917] dark:text-white">
                     AI Tips for {month} {year}
                   </DialogTitle>
                   <DialogDescription className="text-sm text-[#78716C]">
@@ -211,7 +211,7 @@ export default function DashboardHeader({
                   </DialogDescription>
                 </DialogHeader>
 
-                <div className="bg-[#E7E5E4] rounded-xl p-4 mt-4 text-sm text-[#1C1917] max-h-72 overflow-y-auto">
+                <div className="bg-[#E7E5E4] rounded-xl p-4 mt-4 text-sm text-[#1C1917] dark:text-white max-h-72 overflow-y-auto">
                   {loading ? (
                     <div className="space-y-2 animate-pulse">
                       <div className="h-3 bg-[#EDEBE9] rounded w-3/4" />
@@ -256,7 +256,7 @@ export default function DashboardHeader({
                   <DialogClose asChild>
                     <Button
                       variant="outline"
-                      className="border-[#C08457]/40 text-[#1C1917] hover:bg-[#E7E5E4]"
+                      className="border-[#C08457]/40 text-[#1C1917] dark:text-white hover:bg-[#E7E5E4]"
                     >
                       Close
                     </Button>
@@ -279,7 +279,7 @@ export default function DashboardHeader({
             )}
           </DialogContent>
         </Dialog>
-      </div> */}
+      </div>
     </div>
   );
 }

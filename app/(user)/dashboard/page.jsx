@@ -358,11 +358,11 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 space-y-6 pb-20 rounded-3xl">
+    <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] dark:text-white p-4 sm:p-6 space-y-6 pb-20 rounded-3xl">
       {showDialog && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-sm text-center">
-            <h3 className="text-lg font-semibold text-[#1C1917]">
+            <h3 className="text-lg font-semibold text-[#1C1917] dark:text-white">
               Welcome to Habit Tracker!
             </h3>
 

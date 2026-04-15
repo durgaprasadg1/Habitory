@@ -25,7 +25,7 @@ export default function Logo({ size = 40, showText = true }) {
         />
         <path
           d="M34 52 L47 65 L72 36"
-          stroke="#1C1917"
+          stroke="currentColor"
           strokeWidth="10"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -34,7 +34,7 @@ export default function Logo({ size = 40, showText = true }) {
       </svg>
 
       {showText && (
-        <span className="text-lg font-semibold text-[#1C1917] tracking-wide">
+        <span className="text-lg font-semibold text-[#1C1917] dark:text-white tracking-wide">
           Habitory
         </span>
       )}

@@ -23,7 +23,7 @@ export default function HowToUsePage() {
   const router = useRouter();
 
   return (
-    <main className="min-h-screen bg-[#F8F5F2] text-[#1C1917] py-8 px-4">
+    <main className="min-h-screen bg-[#F8F5F2] text-[#1C1917] dark:text-white py-8 px-4">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="text-center mb-8">
@@ -38,18 +38,18 @@ export default function HowToUsePage() {
         {/* Introduction */}
         <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40 mb-6">
           <CardHeader>
-            <CardTitle className="text-[#1C1917] text-xl">
+            <CardTitle className="text-[#1C1917] dark:text-white text-xl">
               Welcome! 👋
             </CardTitle>
           </CardHeader>
-          <CardContent className="text-[#1C1917] space-y-3">
+          <CardContent className="text-[#1C1917] dark:text-white space-y-3">
             <p>
               This app helps you track your daily habits and achieve your
               monthly goals. It's easy to use and designed to keep you
               motivated!
             </p>
             <p className="font-semibold text-[#C08457]">
-              Let's get started with the basics: 
+              Let's get started with the basics:
             </p>
           </CardContent>
         </Card>
@@ -57,12 +57,12 @@ export default function HowToUsePage() {
         {/* Navigation Section */}
         <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40 mb-6">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-[#1C1917]">
+            <CardTitle className="flex items-center gap-2 text-[#1C1917] dark:text-white">
               🧭 Navigate Around
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <p className="text-[#1C1917]">
+            <p className="text-[#1C1917] dark:text-white">
               At the top of every page, you'll find four main buttons:
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -101,12 +101,12 @@ export default function HowToUsePage() {
         {/* Step 1: Dashboard */}
         <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40 mb-6">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-[#1C1917]">
+            <CardTitle className="flex items-center gap-2 text-[#1C1917] dark:text-white">
               <Home className="w-5 h-5 text-[#C08457]" />
               Step 1: Your Dashboard
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 text-[#1C1917]">
+          <CardContent className="space-y-3 text-[#1C1917] dark:text-white">
             <p>
               The <strong>Dashboard</strong> is where you'll spend most of your
               time. Here you can see all your habits and track them daily.
@@ -125,12 +125,12 @@ export default function HowToUsePage() {
         {/* Step 2: Add Habits */}
         <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40 mb-6">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-[#1C1917]">
+            <CardTitle className="flex items-center gap-2 text-[#1C1917] dark:text-white">
               <Plus className="w-5 h-5 text-[#C08457]" />
               Step 2: Add Your First Habit
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 text-[#1C1917]">
+          <CardContent className="space-y-3 text-[#1C1917] dark:text-white">
             <p>Time to create your first habit!</p>
             <div className="bg-white p-4 rounded-lg space-y-3">
               <div className="flex items-start gap-2">
@@ -172,12 +172,12 @@ export default function HowToUsePage() {
         {/* Step 3: Set Monthly Goal */}
         <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40 mb-6">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-[#1C1917]">
+            <CardTitle className="flex items-center gap-2 text-[#1C1917] dark:text-white">
               <Target className="w-5 h-5 text-[#C08457]" />
               Step 3: Set Your Monthly Goal (Optional)
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 text-[#1C1917]">
+          <CardContent className="space-y-3 text-[#1C1917] dark:text-white">
             <p>
               Pick <strong>one habit</strong> each month to focus on as your
               main goal. This helps you stay focused!
@@ -214,12 +214,12 @@ export default function HowToUsePage() {
         {/* Step 4: Track Daily */}
         <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40 mb-6">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-[#1C1917]">
+            <CardTitle className="flex items-center gap-2 text-[#1C1917] dark:text-white">
               <Check className="w-5 h-5 text-[#C08457]" />
               Step 4: Track Your Habits Daily
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 text-[#1C1917]">
+          <CardContent className="space-y-3 text-[#1C1917] dark:text-white">
             <p>
               This is the most important part - marking your habits as complete
               each day!
@@ -262,12 +262,12 @@ export default function HowToUsePage() {
         {/* Step 5: View Analytics */}
         <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40 mb-6">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-[#1C1917]">
+            <CardTitle className="flex items-center gap-2 text-[#1C1917] dark:text-white">
               <BarChart3 className="w-5 h-5 text-[#C08457]" />
               Step 5: Check Your Progress (Analytics)
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 text-[#1C1917]">
+          <CardContent className="space-y-3 text-[#1C1917] dark:text-white">
             <p>
               Want to see how well you're doing? Head to the{" "}
               <strong>Analytics</strong> page!
@@ -310,12 +310,12 @@ export default function HowToUsePage() {
         {/* Step 6: View History */}
         <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40 mb-6">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-[#1C1917]">
+            <CardTitle className="flex items-center gap-2 text-[#1C1917] dark:text-white">
               <History className="w-5 h-5 text-[#C08457]" />
               Step 6: Look Back at History
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 text-[#1C1917]">
+          <CardContent className="space-y-3 text-[#1C1917] dark:text-white">
             <p>
               The <strong>History</strong> page lets you review any previous
               month's data.
@@ -345,12 +345,12 @@ export default function HowToUsePage() {
         {/* Step 7: Edit & Delete */}
         <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40 mb-6">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-[#1C1917]">
+            <CardTitle className="flex items-center gap-2 text-[#1C1917] dark:text-white">
               <Edit className="w-5 h-5 text-[#C08457]" />
               Managing Your Habits
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 text-[#1C1917]">
+          <CardContent className="space-y-3 text-[#1C1917] dark:text-white">
             <p>Need to change or remove a habit? No problem!</p>
             <div className="bg-white p-4 rounded-lg space-y-3">
               <div className="flex items-start gap-2">
@@ -380,12 +380,12 @@ export default function HowToUsePage() {
         {/* Bonus Feature */}
         <Card className="bg-linear-to-br from-[#C08457]/10 to-[#E7E5E4] border border-[#C08457]/40 mb-6">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-[#1C1917]">
+            <CardTitle className="flex items-center gap-2 text-[#1C1917] dark:text-white">
               <Sparkles className="w-5 h-5 text-[#C08457]" />
               Bonus: AI Summary
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-3 text-[#1C1917]">
+          <CardContent className="space-y-3 text-[#1C1917] dark:text-white">
             <p>
               Click the <strong className="text-[#C08457]">"AI Summary"</strong>{" "}
               button on your dashboard to get a smart summary of your progress!
@@ -400,31 +400,31 @@ export default function HowToUsePage() {
         {/* Tips Section */}
         <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40 mb-6">
           <CardHeader>
-            <CardTitle className="text-[#1C1917]">
+            <CardTitle className="text-[#1C1917] dark:text-white">
               💡 Pro Tips for Success
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
             <div className="bg-white p-3 rounded-lg">
-              <p className="text-sm text-[#1C1917]">
+              <p className="text-sm text-[#1C1917] dark:text-white">
                 <strong>Start Small:</strong> Begin with 2-3 habits. It's better
                 to do a few well than many poorly!
               </p>
             </div>
             <div className="bg-white p-3 rounded-lg">
-              <p className="text-sm text-[#1C1917]">
+              <p className="text-sm text-[#1C1917] dark:text-white">
                 <strong>Be Consistent:</strong> Check in daily, even if just for
                 a minute. Consistency is key!
               </p>
             </div>
             <div className="bg-white p-3 rounded-lg">
-              <p className="text-sm text-[#1C1917]">
+              <p className="text-sm text-[#1C1917] dark:text-white">
                 <strong>Review Weekly:</strong> Check your analytics every week
                 to see your progress and stay motivated.
               </p>
             </div>
             <div className="bg-white p-3 rounded-lg">
-              <p className="text-sm text-[#1C1917]">
+              <p className="text-sm text-[#1C1917] dark:text-white">
                 <strong>Be Honest:</strong> Only mark habits as complete when
                 you actually do them. This app works best with honesty!
               </p>

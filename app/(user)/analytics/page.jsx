@@ -96,7 +96,7 @@ export default function AnalyticsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 lg:p-8 rounded-3xl">
+    <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] dark:text-white p-4 sm:p-6 lg:p-8 rounded-3xl">
       <div className="max-w-7xl mx-auto mb-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>

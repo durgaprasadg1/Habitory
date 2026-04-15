@@ -11,7 +11,7 @@ export default function HomePage() {
   };
 
   return (
-    <main className="relative min-h-screen overflow-hidden bg-[#F8F5F2] text-[#1C1917]">
+    <main className="relative min-h-screen overflow-hidden bg-[#F8F5F2] text-[#1C1917] dark:text-white">
       <div className="absolute -top-40 -left-40 w-96 h-96 bg-[#C08457]/20 blur-[140px] rounded-full" />
 
       <div className="absolute -bottom-40 -right-40 w-96 h-96 bg-[#A8A29E]/20 blur-[140px] rounded-full" />
@@ -42,7 +42,7 @@ export default function HomePage() {
 
       <section className="relative z-10 px-5 pb-24 flex flex-col gap-6">
         <div className="bg-[#E7E5E4] border border-[#A8A29E]/40 rounded-2xl p-6 shadow-sm">
-          <h3 className="text-lg font-semibold text-[#1C1917]">
+          <h3 className="text-lg font-semibold text-[#1C1917] dark:text-white">
             Monthly Goal System
           </h3>
           <p className="mt-2 text-sm text-[#A8A29E]">
@@ -52,7 +52,7 @@ export default function HomePage() {
         </div>
 
         <div className="bg-[#E7E5E4] border border-[#A8A29E]/40 rounded-2xl p-6 shadow-sm">
-          <h3 className="text-lg font-semibold text-[#1C1917]">
+          <h3 className="text-lg font-semibold text-[#1C1917] dark:text-white">
             Calendar Tracking
           </h3>
           <p className="mt-2 text-sm text-[#A8A29E]">
@@ -62,7 +62,7 @@ export default function HomePage() {
         </div>
 
         <div className="bg-[#E7E5E4] border border-[#A8A29E]/40 rounded-2xl p-6 shadow-sm">
-          <h3 className="text-lg font-semibold text-[#1C1917]">
+          <h3 className="text-lg font-semibold text-[#1C1917] dark:text-white">
             Advanced Analytics
           </h3>
           <p className="mt-2 text-sm text-[#A8A29E]">

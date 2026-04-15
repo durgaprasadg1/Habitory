@@ -49,7 +49,7 @@ const plans = [
 
 export default function Planning() {
   return (
-    <div className="container mx-auto py-10 px-4">
+    <div className="min-h-screen bg-[#F8F5F2] text-[#1C1917] dark:text-white container mx-auto py-10 px-4">
       <div className="text-center mb-10">
         <h2 className="text-3xl font-bold text-[#C08457]">Choose Your Plan</h2>
         <p className="text-gray-500 mt-2">

@@ -125,7 +125,7 @@ export default function HistoryPage() {
 
   if (availableMonths.length === 0) {
     return (
-      <div className="min-h-screen rounded-3xl bg-[#F8F5F2] text-[#1C1917] p-4 sm:p-6 lg:p-8 pb-20">
+      <div className="min-h-screen rounded-3xl bg-[#F8F5F2] text-[#1C1917] dark:text-white p-4 sm:p-6 lg:p-8 pb-20">
         <div className="max-w-7xl mx-auto">
           <div className="mb-6">
             <h1 className="text-2xl sm:text-3xl font-bold flex items-center gap-2">
@@ -140,7 +140,7 @@ export default function HistoryPage() {
             <CardContent className="py-12">
               <div className="text-center">
                 <Calendar className="w-16 h-16 text-[#A8A29E] mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-[#1C1917] mb-2">
+                <h3 className="text-xl font-semibold text-[#1C1917] dark:text-white mb-2">
                   No Past Month History Available
                 </h3>
                 <p className="text-[#A8A29E]">
@@ -184,7 +184,7 @@ export default function HistoryPage() {
                   });
                 }}
               >
-                <SelectTrigger className="w-full sm:w-auto bg-white border-[#A8A29E]/50 text-[#1C1917] focus:ring-1 focus:ring-[#C08457] focus:border-[#C08457]">
+                <SelectTrigger className="w-full sm:w-auto bg-white dark:bg-[#0b0b0b] border-[#A8A29E]/50 text-[#1C1917] dark:text-white focus:ring-1 focus:ring-[#C08457] focus:border-[#C08457]">
                   <SelectValue placeholder="Select a month" />
                 </SelectTrigger>
                 <SelectContent className="bg-white border-[#A8A29E]/50">
@@ -192,7 +192,7 @@ export default function HistoryPage() {
                     <SelectItem
                       key={index}
                       value={`${m.year}-${m.month}`}
-                      className="text-[#1C1917]"
+                      className="text-[#1C1917] dark:text-white"
                     >
                       {monthNames[m.month - 1]} {m.year}
                     </SelectItem>
@@ -213,13 +213,13 @@ export default function HistoryPage() {
             {monthData.monthlyGoal && (
               <Card className="bg-[#E7E5E4] border border-[#A8A29E]/40">
                 <CardHeader>
-                  <CardTitle className="text-base sm:text-lg text-[#1C1917] flex items-center gap-2">
+                  <CardTitle className="text-base sm:text-lg text-[#1C1917] dark:text-white flex items-center gap-2">
                     <Target className="w-5 h-5 text-[#C08457]" />
                     Monthly Goal
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <h4 className="font-semibold text-sm text-[#1C1917]">
+                  <h4 className="font-semibold text-sm text-[#1C1917] dark:text-white">
                     {monthData.monthlyGoal.title}
                   </h4>
                   {monthData.monthlyGoal.description && (

@@ -3,7 +3,7 @@ import StatCard from "./StatCard";
 export default function ProfileStats({ stats, loading }) {
   return (
     <div>
-      <h2 className="text-md font-semibold text-[#1C1917] mb-3">
+      <h2 className="text-md font-semibold text-[#1C1917] dark:text-white mb-3">
         Profile Statistics
       </h2>
 
@@ -26,15 +26,19 @@ export default function ProfileStats({ stats, loading }) {
           <StatCard label="Total Habits" value={stats.totalHabits} />
           <StatCard label="Active Habits" value={stats.activeHabits} />
           <StatCard label="Total Logs" value={stats.totalLogs} />
-          <StatCard label="Current Streak" value={`${stats.currentStreak} days`} />
+          <StatCard
+            label="Current Streak"
+            value={`${stats.currentStreak} days`}
+          />
           <div className="col-span-2">
-            <StatCard label="Completion Rate" value={`${stats.completionRate}%`} />
+            <StatCard
+              label="Completion Rate"
+              value={`${stats.completionRate}%`}
+            />
           </div>
         </div>
       ) : (
-        <p className="text-[#78716C] text-sm">
-          Unable to load statistics
-        </p>
+        <p className="text-[#78716C] text-sm">Unable to load statistics</p>
       )}
     </div>
   );
