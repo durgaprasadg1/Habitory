@@ -32,7 +32,7 @@ export default function RootLayout({ children }) {
     >
       <html lang="en" className="h-full">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen  text-white`}
+          className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen text-[#1C1917] dark:text-white`}
         >
           <Nav />
           <Toaster position="bottom-center" richColors />
